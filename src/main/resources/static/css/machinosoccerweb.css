@@ -40,3 +40,8 @@ footer {
 .img-rounded {
   border-radius: 16px;
 }
+
+.form-group.required .control-label:after {
+  content:"*";
+  color:red;
+}

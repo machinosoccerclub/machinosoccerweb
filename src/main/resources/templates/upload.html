@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="icon" href="images/favicon.ico"/>
+
+    <title>顔写真登録 | 柏の葉 まちのサッカークラブ</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="css/machinosoccerweb.css" media="all"/>
+</head>
+<body>
+<div class="container">
+    <div class="main">
+        <h2>顔写真アップロード</h2>
+        <p>
+
+        </p>
+        <form method="POST" enctype="multipart/form-data" action="/upload">
+            <legend>入会者情報</legend>
+            <div class="form-group required">
+                <label class="control-label" for="name">名前（漢字）</label>
+                <input type="text" name="name" id="name" class="form-control"
+                       data-validation-error-msg="入力してください"
+                       required />
+            </div>
+            <div class="form-group required">
+                <label class="control-label" for="nameKana">名前（ふりがな）</label>
+                <input type="text" name="nameKana" id="nameKana" class="form-control"
+                       data-validation-error-msg="入力してください"
+                       required />
+            </div>
+            <div class="form-group required">
+                <label class="control-label">学年</label>
+                <div class="radio">
+                    <label class="radio-inline"><input type="radio" name="grade" id="gradek1" value="年少"
+                                                       data-validation-error-msg="入力してください"
+                                                       required />年少</label>
+                    <label class="radio-inline"><input type="radio" name="grade" id="gradek2" value="年中" />年中</label>
+                    <label class="radio-inline"><input type="radio" name="grade" id="gradek3" value="年長" />年長</label>
+                    <label class="radio-inline"><input type="radio" name="grade" id="gradee1" value="小１" />小１</label>
+                    <label class="radio-inline"><input type="radio" name="grade" id="gradee2" value="小２" />小２</label>
+                    <label class="radio-inline"><input type="radio" name="grade" id="gradee3" value="小３" />小３</label>
+                    <label class="radio-inline"><input type="radio" name="grade" id="gradee4" value="小４" />小４</label>
+                    <label class="radio-inline"><input type="radio" name="grade" id="gradee5" value="小５" />小５</label>
+                    <label class="radio-inline"><input type="radio" name="grade" id="gradee6" value="小６" />小６</label>
+                    <label class="radio-inline"><input type="radio" name="grade" id="gradepr" value="保護者" />保護者<sup>*</sup></label>
+                    <span id="helpPr" class="help-block">*お手伝い頂いている保護者の方、お手伝いコーチの方もよろしければご登録ください</span>
+                </div>
+            </div>
+            <div class="form-group required">
+                <label class="control-label">性別</label>
+                <div class="radio">
+                    <label class="radio-inline"><input type="radio" name="gender" id="genderm" value="男"
+                                                       data-validation-error-msg="入力してください"
+                                                       required />男性</label>
+                    <label class="radio-inline"><input type="radio" name="gender" id="genderf" value="女" />女性</label>
+                </div>
+            </div>
+            <div class="form-group required">
+                <label class="control-label" for="photo">顔写真</label>
+                <input type="file" id="photo" name="photo" accept="image/gif, image/png, image/jpg, image/jpeg"
+                       data-validation-error-msg="写真を選択してください"
+                       required />
+                <span id="helpBlock" class="help-block">投稿頂いた写真はプログラムの実施・運営のために使用します。プライバシーポリシーの詳細についてはこちらの<a href="http://goo.gl/6Gbiyr">リンク</a>をご確認ください</span>
+            </div>
+            <div class="form-group">
+                <input type="submit" class="btn btn-primary" value="送信" />
+            </div>
+        </form>
+    </div>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.2.43/jquery.form-validator.min.js"></script>
+    <script>
+    $.validate({
+      modules : 'html5'
+    });
+    </script>
+</div>
+
+</html>
