@@ -51,6 +51,9 @@ dependencies {
     }
     compile 'org.slf4j:slf4j-api:1.7.12'
 
+    compile 'org.webjars:bootstrap:3.3.4'
+    compile 'org.webjars:jquery:2.1.4'
+
     runtime 'net.sourceforge.nekohtml:nekohtml:1.9.21'
     runtime 'org.flywaydb:flyway-core:3.2.1'
     runtime 'com.h2database:h2:1.4.+'
