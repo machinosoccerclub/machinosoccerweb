@@ -15,33 +15,37 @@ import java.io.InputStream;
 @Controller
 @EnableAutoConfiguration
 public class UploadController {
-    @Autowired
-    private PicasaAlbumService picasaAlbumService;
+  @Autowired
+  private PicasaAlbumService picasaAlbumService;
 
-    @RequestMapping(value = "/upload", method = RequestMethod.GET)
-    public String uploadForm() {
-        return "/upload";
-    }
+  @RequestMapping(value = "/upload", method = RequestMethod.GET)
+  public String uploadForm() {
+      return "/upload";
+  }
 
-    @RequestMapping(value = "/upload", method = RequestMethod.POST)
-    public String upload(@RequestParam("name") String name,
-                         @RequestParam("nameKana") String namekana,
-                         @RequestParam("grade") String grade,
-                         @RequestParam("gender") String gender,
-                         @RequestParam("photo") MultipartFile file) throws IOException {
-        if(!file.isEmpty()) {
-            String orgfileName = file.getOriginalFilename();
-            String fileName = normalizeName(name, namekana) + orgfileName.substring(orgfileName.lastIndexOf('.'));
-            try(InputStream is = file.getInputStream()) {
-                picasaAlbumService.uploadPhoto(fileName, file.getContentType(), new String[]{grade, gender}, is);
-            }
-            return "/conf";
-        } else {
-            return "/conferror";
-        }
+  @RequestMapping(value = "/upload", method = RequestMethod.POST)
+  public String upload(@RequestParam("name") String name,
+                       @RequestParam("nameKana") String namekana,
+                       @RequestParam("grade") String grade,
+                       @RequestParam("gender") String gender,
+                       @RequestParam("photo") MultipartFile file) throws IOException {
+    if(!file.isEmpty()) {
+      String nameAndKana = normalizeName(name, namekana);
+      try(InputStream is = file.getInputStream()) {
+          picasaAlbumService.uploadPhoto(
+            file.getOriginalFilename(),
+            nameAndKana,
+            file.getContentType(),
+            new String[]{grade, gender},
+            is);
+      }
+      return "/conf";
+    } else {
+      return "/conferror";
     }
+  }
 
-    private String normalizeName(String name, String kana) {
-        return (name.trim() + "（" + kana.trim() + "）").replace(' ', '　');
-    }
+  private String normalizeName(String name, String kana) {
+    return (name.trim() + "（" + kana.trim() + "）").replace(' ', '　');
+  }
 }
