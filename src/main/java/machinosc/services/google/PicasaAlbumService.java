@@ -21,6 +21,9 @@ public class PicasaAlbumService {
   @Value("${google.api.picasa.albumId}")
   private String albumId;
 
+  @Value("${retrofit.debug.contentsLogging:false}")
+  private boolean contentsLogging;
+
   public void uploadPhoto(String fileName, String description, String mimeType, String[] tags, InputStream photo) {
     uploadPhoto(oAuth2Service.refreshToken(), fileName, description, mimeType, tags, photo);
   }
@@ -47,12 +50,20 @@ public class PicasaAlbumService {
   }
 
   private PicasaAlbum createPicasaAlbumService() {
-    RestAdapter picasaRestAdapter = new RestAdapter.Builder()
+    RestAdapter picasaRestAdapter = setupAdapter(
+      new RestAdapter.Builder()
       .setEndpoint("https://picasaweb.google.com")
-      .setLogLevel(RestAdapter.LogLevel.FULL)
       .setConverter(new SimpleXMLConverter())
-      .build();
+    ).build();
     return picasaRestAdapter.create(PicasaAlbum.class);
+  }
+
+  private RestAdapter.Builder setupAdapter(RestAdapter.Builder adapter) {
+    if(contentsLogging) {
+      return adapter.setLogLevel(RestAdapter.LogLevel.FULL);
+    } else {
+      return adapter;
+    }
   }
 
   private TypedByteArray createMetaDataXmlPart(String description, String tags) {
