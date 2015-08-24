@@ -20,7 +20,7 @@ public class UploadController {
 
   @RequestMapping(value = "/upload", method = RequestMethod.GET)
   public String uploadForm() {
-      return "/upload";
+      return "upload";
   }
 
   @RequestMapping(value = "/upload", method = RequestMethod.POST)
@@ -39,9 +39,9 @@ public class UploadController {
             new String[]{grade, gender},
             is);
       }
-      return "/conf";
+      return "conf";
     } else {
-      return "/conferror";
+      return "conferror";
     }
   }
 
