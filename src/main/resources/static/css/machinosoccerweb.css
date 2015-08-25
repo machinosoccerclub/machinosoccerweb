@@ -1,18 +1,18 @@
 body *{
-  font-family: 'Noto Sans Japanese', sans-serif;
+  font-family: “游ゴシック”, YuGothic, “ヒラギノ角ゴ ProN W3”, “Hiragino Kaku Gothic ProN”, “メイリオ”, Meiryo, sans-serif;
 }
 
 h1,h2{
-  font-family: 'Noto Sans Japanese', sans-serif;
   font-weight: 200;
 }
+
 h3,h4,h5{
-  font-family: 'Noto Sans Japanese', sans-serif;
   font-weight: 100;
 }
 
 header {
 	text-align: center;
+  word-break: keep-all;
 	padding-top: 8px;
 	padding-bottom: 4px;
 	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#c9de96+0,8ab66b+44,398235+100;Green+3D+%233 */
@@ -27,21 +27,20 @@ header {
 }
 
 footer {
-	//color: white;
 	text-align: right;
 	padding: 24px 0 4px 0;
-	background: lightGray;
-}
-
-.img-profile {
-  opacity: 0.6;
-}
-
-.img-rounded {
-  border-radius: 16px;
 }
 
 .form-group.required .control-label:after {
   content:"*";
+  vertical-align: super;
   color:red;
+}
+
+.notice-box {
+  display: block;
+  box-sizing: border-box;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  color: #747474;
 }

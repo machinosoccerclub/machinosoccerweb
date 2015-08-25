@@ -1,6 +1,8 @@
 package machinosc.registration.web;
 
 import machinosc.services.google.PicasaAlbumService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.stereotype.Controller;
@@ -15,8 +17,13 @@ import java.io.InputStream;
 @Controller
 @EnableAutoConfiguration
 public class UploadController {
+  private static final Logger logger = LoggerFactory.getLogger(UploadController.class);
+
   @Autowired
   private PicasaAlbumService picasaAlbumService;
+
+  @RequestMapping(value = "/completed", method = RequestMethod.GET)
+  public String completed() { return "completed"; }
 
   @RequestMapping(value = "/upload", method = RequestMethod.GET)
   public String uploadForm() {
@@ -39,9 +46,11 @@ public class UploadController {
             new String[]{grade, gender},
             is);
       }
-      return "conf";
+      return "redirect:/completed";
     } else {
-      return "conferror";
+      logger.error("empty file posted ... name:{}, kana:{}, grade:{}, gender:{}", name, namekana, grade, gender);
+
+      return "redirect:/confirm-error";
     }
   }
 
