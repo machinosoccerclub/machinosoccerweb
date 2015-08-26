@@ -16,7 +16,7 @@
     <div class="main">
       <h2>顔写真アップロード</h2>
 
-      <form method="POST" enctype="multipart/form-data" action="/upload">
+      <form method="POST" enctype="multipart/form-data" action="/upload" onsubmit="$('#uploadSubmit').prop('disabled', true);">
         <legend>入会者情報</legend>
         <div class="form-group required">
           <label class="control-label" for="name">名前（漢字）</label>
@@ -70,7 +70,7 @@
           <span id="helpBlock" class="help-block">投稿頂いた写真はプログラムの実施・運営のために使用します。プライバシーポリシーの詳細についてはこちらの<a href="http://goo.gl/6Gbiyr" target="_blank">リンク</a>をご確認ください</span>
         </div>
         <div class="form-group">
-          <input type="submit" class="btn btn-primary" value="送信" />
+          <input type="submit" id="uploadSubmit" class="btn btn-success btn-block" value="送信" />
         </div>
       </form>
     </div>
