@@ -1,12 +1,16 @@
 <!DOCTYP html>
-<html lang="ja">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="utf-8"/>
   <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
   <title>受け付けました | まちのサッカークラブ</title>
-  <link rel="stylesheet" href="css/machinosoccerweb.css" media="all"/>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" th:href="@{/webjars/bootstrap/3.3.4/css/bootstrap.min.css}">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css" th:href="@{/webjars/bootstrap/3.3.4/css/bootstrap-theme.min.css}">
+  <link rel="stylesheet" href="https://www.fuelcdn.com/fuelux/3.10.0/css/fuelux.min.css" th:href="@{/webjars/fuelux/3.10.0/dist/css/fuelux.min.css}">
+  <link rel="stylesheet" href="../static/css/machinosoccerweb.css" th:href="@{css/machinosoccerweb.css}" media="all">
+
 </head>
 <body>
 <div class="container">
@@ -15,6 +19,18 @@
       <h2>まちのサッカークラブ 柏の葉</h2>
     </hgroup>
   </header>
+  <div class="fuelux">
+    <div class="wizard" data-initialize="wizard" id="myWizard">
+      <div class="steps-container">
+        <ul class="steps">
+          <li data-step="1" data-name="campaign" data-restrict="previous"><span class="glyphicon glyphicon glyphicon-envelope" aria-hidden="true"></span>アドレス確認<span class="chevron"></span></li>
+          <li data-step="2" data-restrict="previous" class="active"><a href="/upload"><span class="glyphicon glyphicon glyphicon-camera" aria-hidden="true"></span>顔写真</a><span class="chevron"></span></li>
+          <li data-step="3" data-name="template" data-restrict="previous"><span class="glyphicon glyphicon glyphicon-flag" aria-hidden="true"></span>完了<span class="chevron"></span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
   <div class="main">
     <h2>参加申し込みを受け付けました。</h2>
     <p>
@@ -24,7 +40,7 @@
     <h3>顔写真登録のお願い</h3>
     <p>
       本人確認のため、お子様の顔写真の登録にご協力願います。
-      登録はこちらの<a href="/upload">ページ</a>からお願いします。
+      <a href="/upload" class="btn btn-success btn-block"><span class="glyphicon glyphicon glyphicon-camera" aria-hidden="true"></span>顔写真登録へ</a>
       <span class="notice-box">
         <small>投稿頂いた写真はプログラムの実施・運営のために使用します。プライバシーポリシーの詳細についてはこちらの<a href="http://goo.gl/6Gbiyr" target="_blank">リンク</a>をご確認ください</small>
       </span>

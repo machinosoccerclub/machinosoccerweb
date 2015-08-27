@@ -1,18 +1,31 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-    <title>顔写真登録 | まちのサッカークラブ</title>
+  <title>顔写真登録 | まちのサッカークラブ</title>
 
-    <link rel='stylesheet' href='/webjars/bootstrap/3.3.4/css/bootstrap.min.css'>
-    <link rel='stylesheet' href='/webjars/bootstrap/3.3.4/css/bootstrap-theme.min.css'>
-    <link rel="stylesheet" href="css/machinosoccerweb.css" media="all"/>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" th:href="@{/webjars/bootstrap/3.3.4/css/bootstrap.min.css}">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css" th:href="@{/webjars/bootstrap/3.3.4/css/bootstrap-theme.min.css}">
+  <link rel="stylesheet" href="https://www.fuelcdn.com/fuelux/3.10.0/css/fuelux.min.css" th:href="@{/webjars/fuelux/3.10.0/dist/css/fuelux.min.css}">
+  <link rel="stylesheet" href="../static/css/machinosoccerweb.css" th:href="@{css/machinosoccerweb.css}" media="all">
 </head>
 <body>
   <div class="container">
+    <div class="fuelux">
+      <div class="wizard" data-initialize="wizard" id="myWizard">
+        <div class="steps-container">
+          <ul class="steps">
+            <li data-step="1" data-name="campaign" data-restrict="previous"><span class="glyphicon glyphicon glyphicon-envelope" aria-hidden="true"></span>アドレス確認<span class="chevron"></span></li>
+            <li data-step="2" data-restrict="previous" class="active"><span class="glyphicon glyphicon glyphicon-camera" aria-hidden="true"></span>顔写真<span class="chevron"></span></li>
+            <li data-step="3" data-name="template" data-restrict="previous"><span class="glyphicon glyphicon glyphicon-flag" aria-hidden="true"></span>完了<span class="chevron"></span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
     <div class="main">
       <h2>顔写真アップロード</h2>
 
@@ -75,11 +88,15 @@
       </form>
     </div>
 
-    <script src="/webjars/jquery/2.1.4/jquery.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.2.43/jquery.form-validator.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js" th:src="@{/webjars/jquery/2.1.4/jquery.min.js}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.2.43/jquery.form-validator.min.js"
+            th:src="@{//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.2.43/jquery.form-validator.min.js}"></script>
     <script>
     $.validate({
       modules : 'file, html5'
+    });
+    $('#photo').change(function(e) {
+      $('#uploadSubmit').focus();
     });
     </script>
   </div>

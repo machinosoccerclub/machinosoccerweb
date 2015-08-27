@@ -44,3 +44,27 @@ footer {
   margin-bottom: 10px;
   color: #747474;
 }
+
+/*
+ * fuelux customization
+ */
+.fuelux .wizard  {
+  min-height: 38px;
+}
+
+.fuelux .wizard .steps-container ul.steps li {
+  font-size: 14px;
+  padding-right: 3px;
+}
+
+.fuelux .wizard .steps-container ul.steps li:first-child {
+  padding-left: 3px;
+}
+
+.fuelux .wizard .steps-container ul.steps li.completed a:link {
+  color: #999
+}
+
+.fuelux .wizard .steps-container ul.steps li.completed a:visited {
+  color: #999
+}
