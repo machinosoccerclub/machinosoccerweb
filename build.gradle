@@ -24,11 +24,6 @@ apply plugin: 'spring-boot'
 apply plugin: 'java'
 apply plugin: 'heroku'
 
-jar {
-  baseName = 'machinosc'
-  version =  '0.0.1'
-}
-
 repositories {
     jcenter()
 }
