@@ -10,7 +10,6 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css" th:href="@{/webjars/bootstrap/3.3.4/css/bootstrap-theme.min.css}">
   <link rel="stylesheet" href="https://www.fuelcdn.com/fuelux/3.10.0/css/fuelux.min.css" th:href="@{/webjars/fuelux/3.10.0/dist/css/fuelux.min.css}">
   <link rel="stylesheet" href="../static/css/machinosoccerweb.css" th:href="@{css/machinosoccerweb.css}" media="all">
-
 </head>
 <body>
 <div class="container">
@@ -24,26 +23,38 @@
       <div class="steps-container">
         <ul class="steps">
           <li data-step="1" data-name="campaign" data-restrict="previous"><span class="glyphicon glyphicon glyphicon-envelope" aria-hidden="true"></span>アドレス確認<span class="chevron"></span></li>
-          <li data-step="2" data-restrict="previous" class="active"><a href="/upload"><span class="glyphicon glyphicon glyphicon-camera" aria-hidden="true"></span>顔写真</a><span class="chevron"></span></li>
-          <li data-step="3" data-name="template" data-restrict="previous"><span class="glyphicon glyphicon glyphicon-flag" aria-hidden="true"></span>完了<span class="chevron"></span></li>
+          <li data-step="2" data-restrict="previous" class="completed"><a href="/upload"><span class="glyphicon glyphicon glyphicon-camera" aria-hidden="true"></span>顔写真</a><span class="chevron"></span></li>
+          <li data-step="3" data-name="template" data-restrict="previous" class="active"><span class="glyphicon glyphicon glyphicon-flag" aria-hidden="true"></span>完了<span class="chevron"></span></li>
         </ul>
       </div>
     </div>
   </div>
 
   <div class="main">
-    <h2>参加申し込みを受け付けました。</h2>
+    <h2>参加者情報を受け付けました。</h2>
     <p>
-    <div>参加申し込みありがとうございます。</div>
-    <div>引き続き、以下のページから顔写真の登録をお願いします。</div>
-    </p>
-    <h3>顔写真登録のお願い</h3>
-    <p>
-      本人確認のため、お子様の顔写真の登録にご協力願います。
+      <div>申し込みありがとうございます。
+      引き続き、他のお子様の顔写真を登録される方は、以下のリンクをクリックして登録してください。
+      </div>
       <a href="/upload" class="btn btn-success btn-block"><span class="glyphicon glyphicon glyphicon-camera" aria-hidden="true"></span>顔写真登録へ</a>
-      <span class="notice-box">
-        <small>投稿頂いた写真はプログラムの実施・運営のために使用します。プライバシーポリシーの詳細についてはこちらの<a href="http://goo.gl/6Gbiyr" target="_blank">リンク</a>をご確認ください</small>
-      </span>
+
+    <hr />
+      すべての方の登録が終わりましたら、初回参加時までに以下の書類等、ご用意ください。</p>
+    <h3>書類のご提出<small>（今年度、既にご提出頂いた方は不要です）</small></h3>
+    <p>
+      <ul class="list-group">
+        <li class="list-group-item">
+          <h4>参加にあたって同意が必要な事項</h4>
+          <span>同意書を印刷・署名のうえ、参加時にお持ちください</span>
+          <a href="https://goo.gl/FT5ooT" target="_blank">https://goo.gl/FT5ooT</a>(同意書)
+        </li>
+        <li class="list-group-item">
+          <h4>（小学生のみ）スポーツ安全保険加入</h4>
+          <span>保険加入申込書に署名のうえ、加入費と一緒にお持ちください</span>
+          <a href="https://goo.gl/r2riu7" target="_blank">https://goo.gl/r2riu7</a>(申込書)
+          <a href="https://goo.gl/m9tR4h" target="_blank">https://goo.gl/m9tR4h</a>(保険概要)
+        </li>
+      </ul>
     </p>
   </div>
 </div>
@@ -54,5 +65,4 @@
     <address><a href="mailto:machinosoccer2013@gmail.com">machinosoccer2013@gmail.com</a>
   </small>
 </footer>
-
 </html>

@@ -1,10 +1,37 @@
-<!DOCTYPE html>
-<html>
-<head lang="ja">
-    <meta charset="UTF-8" />
-    <title>Welcome</title>
+<!DOCTYP html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+  <title>まちのサッカークラブ</title>
+  <link rel="stylesheet" href="css/machinosoccerweb.css" media="all"/>
 </head>
 <body>
-    <p>Welcome to our site.</p>
-</body>
+<div class="container">
+  <header>
+    <hgroup>
+      <h2>まちのサッカークラブ 柏の葉</h2>
+    </hgroup>
+  </header>
+  <div class="main">
+    <h2>新規加入 申し込み</h2>
+    <p>
+      新規参加をご希望の方は、以下のリンクにある申し込みフォームから登録をお願いします。
+    <div>
+      <a href="/" th:href="${registerUrl}" th:text="${registerUrl}">申し込みフォーム</a>
+    </div>
+
+    </p>
+  </div>
+</div>
+<footer>
+  <hr />
+  <small>
+    ©2013-2015 まちのサッカークラブ柏の葉
+    <address><a href="mailto:machinosoccer2013@gmail.com">machinosoccer2013@gmail.com</a>
+  </small>
+</footer>
+
 </html>

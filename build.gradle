@@ -24,11 +24,6 @@ apply plugin: 'spring-boot'
 apply plugin: 'java'
 apply plugin: 'heroku'
 
-jar {
-  baseName = 'machinosc'
-  version =  '0.0.1'
-}
-
 repositories {
     jcenter()
 }
@@ -40,7 +35,20 @@ dependencies {
     compile "org.springframework.boot:spring-boot-starter-web"
     compile "org.springframework.boot:spring-boot-starter-thymeleaf"
     compile "org.springframework.boot:spring-boot-starter-data-jpa"
+    compile 'com.squareup.retrofit:retrofit:1.9.0'
+    compile 'com.squareup.retrofit:converter-simplexml:1.9.0'
+    compile 'commons-io:commons-io:2.4'
+    compile 'com.google.code.gson:gson:2.3.1'
+    compile ('org.simpleframework:simple-xml:2.7.1') {
+        exclude module: 'stax:stax-api'
+        exclude module: 'stax:stax'
+        exclude module: 'xpp3:xpp3'
+    }
     compile 'org.slf4j:slf4j-api:1.7.12'
+
+    compile 'org.webjars:jquery:2.1.4'
+    compile 'org.webjars:bootstrap:3.3.4'
+    compile 'org.webjars.bower:fuelux:3.10.0'
 
     runtime 'net.sourceforge.nekohtml:nekohtml:1.9.21'
     runtime 'org.flywaydb:flyway-core:3.2.1'

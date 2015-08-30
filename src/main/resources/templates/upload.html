@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+  <title>顔写真登録 | まちのサッカークラブ</title>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" th:href="@{/webjars/bootstrap/3.3.4/css/bootstrap.min.css}">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css" th:href="@{/webjars/bootstrap/3.3.4/css/bootstrap-theme.min.css}">
+  <link rel="stylesheet" href="https://www.fuelcdn.com/fuelux/3.10.0/css/fuelux.min.css" th:href="@{/webjars/fuelux/3.10.0/dist/css/fuelux.min.css}">
+  <link rel="stylesheet" href="../static/css/machinosoccerweb.css" th:href="@{css/machinosoccerweb.css}" media="all">
+</head>
+<body>
+  <div class="container">
+    <div class="fuelux">
+      <div class="wizard" data-initialize="wizard" id="myWizard">
+        <div class="steps-container">
+          <ul class="steps">
+            <li data-step="1" data-name="campaign" data-restrict="previous"><span class="glyphicon glyphicon glyphicon-envelope" aria-hidden="true"></span>アドレス確認<span class="chevron"></span></li>
+            <li data-step="2" data-restrict="previous" class="active"><span class="glyphicon glyphicon glyphicon-camera" aria-hidden="true"></span>顔写真<span class="chevron"></span></li>
+            <li data-step="3" data-name="template" data-restrict="previous"><span class="glyphicon glyphicon glyphicon-flag" aria-hidden="true"></span>完了<span class="chevron"></span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="main">
+      <h2>顔写真アップロード</h2>
+
+      <form method="POST" id="uploadForm" enctype="multipart/form-data" action="/upload">
+        <legend>入会者情報</legend>
+        <div class="form-group required">
+          <label class="control-label" for="name">名前（漢字）</label>
+          <input type="text" name="name" id="name" class="form-control"
+                 data-validation-error-msg="入力してください"
+                 required />
+        </div>
+        <div class="form-group required">
+          <label class="control-label" for="nameKana">名前（ふりがな）</label>
+          <input type="text" name="nameKana" id="nameKana" class="form-control"
+                 data-validation-error-msg="入力してください"
+                 required />
+        </div>
+        <div class="form-group required">
+          <label class="control-label">学年</label>
+          <div class="radio">
+            <label class="radio-inline"><input type="radio" name="grade" id="gradek1" value="年少"
+                                               data-validation-error-msg="入力してください"
+                                               required />年少</label>
+            <label class="radio-inline"><input type="radio" name="grade" id="gradek2" value="年中" />年中</label>
+            <label class="radio-inline"><input type="radio" name="grade" id="gradek3" value="年長" />年長</label>
+            <label class="radio-inline"><input type="radio" name="grade" id="gradee1" value="小１" />小１</label>
+            <label class="radio-inline"><input type="radio" name="grade" id="gradee2" value="小２" />小２</label>
+            <label class="radio-inline"><input type="radio" name="grade" id="gradee3" value="小３" />小３</label>
+            <label class="radio-inline"><input type="radio" name="grade" id="gradee4" value="小４" />小４</label>
+            <label class="radio-inline"><input type="radio" name="grade" id="gradee5" value="小５" />小５</label>
+            <label class="radio-inline"><input type="radio" name="grade" id="gradee6" value="小６" />小６</label>
+            <label class="radio-inline"><input type="radio" name="grade" id="gradepr" value="保護者" />保護者<sup>*</sup></label>
+            <span id="helpPr" class="help-block">*お手伝い頂いている保護者の方、お手伝いコーチの方もよろしければご登録ください</span>
+          </div>
+        </div>
+        <div class="form-group required">
+          <label class="control-label">性別</label>
+          <div class="radio">
+            <label class="radio-inline"><input type="radio" name="gender" id="genderm" value="男"
+                                               data-validation-error-msg="入力してください"
+                                               required />男性</label>
+            <label class="radio-inline"><input type="radio" name="gender" id="genderf" value="女" />女性</label>
+          </div>
+        </div>
+        <div class="form-group required">
+          <label class="control-label" for="photo">顔写真</label>
+          <input type="file" id="photo" name="photo" accept="image/gif, image/png, image/jpg, image/jpeg"
+                 data-validation="mime size required"
+                 data-validation-allowing="jpg, jpeg, png, gif"
+                 data-validation-max-size="2kb"
+                 data-validation-error-msg-size="サイズが大きすぎます（5MB以下のファイルにしてください）"
+                 data-validation-error-msg-mime="画像ファイルを選択してください"
+                 data-validation-error-msg-required="写真を選択してください"
+                 required />
+        </div>
+        <div class="form-group">
+          <input type="submit" id="uploadSubmit" class="btn btn-success btn-block" value="送信" />
+          <span id="helpBlock" class="help-block">投稿頂いた写真はプログラムの実施・運営のために使用します。プライバシーポリシーの詳細についてはこちらの<a href="http://goo.gl/6Gbiyr" target="_blank">リンク</a>をご確認ください</span>
+        </div>
+      </form>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js" th:src="@{/webjars/jquery/2.1.4/jquery.min.js}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.2.43/jquery.form-validator.min.js"
+            th:src="@{//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.2.43/jquery.form-validator.min.js}"></script>
+    <script>
+    $.validate({
+      modules : 'file, html5'
+    });
+
+    $('#uploadForm').submit(function(e) {
+      var isValid = $(e.target).isValid(null, null, false);
+      $('#uploadSubmit').prop('disabled', isValid);
+      return isValid;
+    });
+
+    $('#photo').change(function(e) {
+      $('#uploadSubmit').focus();
+    });
+    </script>
+  </div>
+</body>
+</html>
