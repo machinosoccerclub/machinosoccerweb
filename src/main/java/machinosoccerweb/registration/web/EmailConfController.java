@@ -1,7 +1,8 @@
-package machinosc;
+package machinosoccerweb.registration.web;
 
-import machinosc.registration.models.EmailConf;
-import machinosc.registration.repositories.EmailConfRepository;
+import machinosoccerweb.infra.HmacUtils;
+import machinosoccerweb.registration.models.EmailConf;
+import machinosoccerweb.registration.repositories.EmailConfRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,19 +28,19 @@ public class EmailConfController
     private String confPhrase;
 
     @Autowired
-    private HmacService hmacService;
+    private HmacUtils hmacUtils;
 
     @Autowired
     private EmailConfRepository confRepository;
 
     @RequestMapping("/confirmed")
     public String confirmed() {
-        return "conf";
+        return "registration/conf";
     }
 
     @RequestMapping("/confirm-error")
     public String confirmError() {
-        return "conferror";
+        return "registration/conferror";
     }
 
     @RequestMapping("/conf")
@@ -51,8 +52,8 @@ public class EmailConfController
 
         Optional<Date> appliedAt = this.parseAppliedDateParam(appliedAtHex);
 
-        Mac mac = hmacService.createHmacSHA256(confPhrase);
-        String hash = hmacService.calcHashToHexString(mac, (appliedAtHex+email).getBytes());
+        Mac mac = hmacUtils.createHmacSHA256(confPhrase);
+        String hash = hmacUtils.calcHashToHexString(mac, (appliedAtHex+email).getBytes());
         if(appliedAt.isPresent() && hash.equals(key)) {
             EmailConf conf = new EmailConf(email, id, appliedAt.get());
             this.confRepository.saveAndFlush(conf);

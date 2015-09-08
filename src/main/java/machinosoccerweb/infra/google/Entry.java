@@ -1,4 +1,4 @@
-package machinosc.services.google;
+package machinosoccerweb.infra.google;
 
 import org.simpleframework.xml.*;
 

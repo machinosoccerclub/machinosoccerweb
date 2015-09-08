@@ -1,6 +1,6 @@
-package machinosc.services.google;
+package machinosoccerweb.infra.google;
 
-import machinosc.services.google.api.PicasaAlbum;
+import machinosoccerweb.infra.google.api.PicasawebService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -11,9 +11,9 @@ import retrofit.mime.TypedByteArray;
 import java.io.InputStream;
 
 @Service
-public class PicasaAlbumService {
+public class Picasaweb {
   @Autowired
-  private OAuth2Service oAuth2Service;
+  private GoogleOAuth2 googleOAuth2;
 
   @Value("${google.api.picasa.userId}")
   private String userId;
@@ -25,11 +25,11 @@ public class PicasaAlbumService {
   private boolean contentsLogging;
 
   public void uploadPhoto(String fileName, String description, String mimeType, String[] tags, InputStream photo) {
-    uploadPhoto(oAuth2Service.refreshToken(), fileName, description, mimeType, tags, photo);
+    uploadPhoto(googleOAuth2.refreshToken(), fileName, description, mimeType, tags, photo);
   }
 
   public void uploadPhoto(AccessToken token, String fileName, String description, String mimeType, String[] tags, InputStream photo) {
-    PicasaAlbum picasaService = createPicasaAlbumService();
+    PicasawebService picasaService = createPicasaAlbumService();
 
     TypedOutputStream outputStream = new TypedOutputStream(fileName, -1L, mimeType, photo);
 
@@ -49,13 +49,13 @@ public class PicasaAlbumService {
     );
   }
 
-  private PicasaAlbum createPicasaAlbumService() {
+  private PicasawebService createPicasaAlbumService() {
     RestAdapter picasaRestAdapter = setupAdapter(
       new RestAdapter.Builder()
       .setEndpoint("https://picasaweb.google.com")
       .setConverter(new SimpleXMLConverter())
     ).build();
-    return picasaRestAdapter.create(PicasaAlbum.class);
+    return picasaRestAdapter.create(PicasawebService.class);
   }
 
   private RestAdapter.Builder setupAdapter(RestAdapter.Builder adapter) {

@@ -1,4 +1,4 @@
-package machinosc;
+package machinosoccerweb;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
