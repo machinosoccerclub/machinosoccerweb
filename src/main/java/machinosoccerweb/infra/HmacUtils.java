@@ -1,4 +1,4 @@
-package machinosc;
+package machinosoccerweb.infra;
 
 import org.springframework.stereotype.Service;
 
@@ -10,7 +10,7 @@ import java.util.Arrays;
 import java.util.stream.IntStream;
 
 @Service
-public class HmacService {
+public class HmacUtils {
     private static final String ALGORITHM_NAME = "HmacSHA256";
 
     public Mac createHmacSHA256(String phrase) throws GeneralSecurityException {

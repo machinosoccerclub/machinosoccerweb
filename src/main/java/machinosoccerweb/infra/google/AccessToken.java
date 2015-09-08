@@ -1,4 +1,4 @@
-package machinosc.services.google;
+package machinosoccerweb.infra.google;
 
 public class AccessToken {
   private String accessToken;

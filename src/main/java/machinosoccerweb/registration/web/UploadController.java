@@ -1,6 +1,6 @@
-package machinosc.registration.web;
+package machinosoccerweb.registration.web;
 
-import machinosc.services.google.PicasaAlbumService;
+import machinosoccerweb.infra.google.Picasaweb;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,14 +20,14 @@ public class UploadController {
   private static final Logger logger = LoggerFactory.getLogger(UploadController.class);
 
   @Autowired
-  private PicasaAlbumService picasaAlbumService;
+  private Picasaweb picasaweb;
 
   @RequestMapping(value = "/completed", method = RequestMethod.GET)
-  public String completed() { return "completed"; }
+  public String completed() { return "registration/completed"; }
 
   @RequestMapping(value = "/upload", method = RequestMethod.GET)
   public String uploadForm() {
-      return "upload";
+      return "registration/upload";
   }
 
   @RequestMapping(value = "/upload", method = RequestMethod.POST)
@@ -39,7 +39,7 @@ public class UploadController {
     if(!file.isEmpty()) {
       String nameAndKana = normalizeName(name, namekana);
       try(InputStream is = file.getInputStream()) {
-          picasaAlbumService.uploadPhoto(
+          picasaweb.uploadPhoto(
             file.getOriginalFilename(),
             nameAndKana,
             file.getContentType(),

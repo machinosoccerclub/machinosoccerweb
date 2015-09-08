@@ -1,4 +1,4 @@
-package machinosc;
+package machinosoccerweb;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
