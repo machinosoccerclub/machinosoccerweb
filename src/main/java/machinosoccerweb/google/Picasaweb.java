@@ -3,14 +3,14 @@ package machinosoccerweb.google;
 import machinosoccerweb.google.api.PicasawebService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import retrofit.RestAdapter;
 import retrofit.converter.SimpleXMLConverter;
 import retrofit.mime.TypedByteArray;
 
 import java.io.InputStream;
 
-@Service
+@Component
 public class Picasaweb {
   @Autowired
   private GoogleOAuth2 googleOAuth2;

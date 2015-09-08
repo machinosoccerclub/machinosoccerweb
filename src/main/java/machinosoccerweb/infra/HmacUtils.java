@@ -1,6 +1,6 @@
 package machinosoccerweb.infra;
 
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
@@ -9,7 +9,7 @@ import java.security.Key;
 import java.util.Arrays;
 import java.util.stream.IntStream;
 
-@Service
+@Component
 public class HmacUtils {
     private static final String ALGORITHM_NAME = "HmacSHA256";
 

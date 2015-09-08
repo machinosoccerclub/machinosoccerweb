@@ -5,11 +5,11 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import machinosoccerweb.google.api.GoogleOAuth2Service;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import retrofit.RestAdapter;
 import retrofit.converter.GsonConverter;
 
-@Service
+@Component
 public class GoogleOAuth2 {
   @Value("${google.api.clientId}")
   private String googleClientId;
