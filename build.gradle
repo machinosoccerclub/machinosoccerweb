@@ -50,7 +50,7 @@ dependencies {
   runtime 'net.sourceforge.nekohtml:nekohtml:1.9.21'
   runtime 'org.flywaydb:flyway-core:3.2.1'
   runtime 'com.h2database:h2:1.4.+'
-  runtime 'org.postgresql:postgresql:9.4-1201-jdbc4'
+  runtime 'org.postgresql:postgresql:9.4-1202-jdbc42'
 
   testCompile 'junit:junit:4.12'
 }
