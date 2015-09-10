@@ -73,4 +73,10 @@ idea {
 
 if(file('herokuSettings.gradle').exists()) apply from: 'herokuSettings.gradle'
 
-task stage(dependsOn: 'clean', 'build')
+// `stage` is to deploy the application on the heroku dyno.
+task stage {
+  dependsOn 'clean'    // clean rebuild
+  dependsOn 'build'
+
+  mustRunAfter 'clean'
+}
