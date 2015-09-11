@@ -1,6 +1,6 @@
-package machinosoccerweb.infra.google.api;
+package machinosoccerweb.google.api;
 
-import machinosoccerweb.infra.google.AccessToken;
+import machinosoccerweb.google.AccessToken;
 import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
 import retrofit.http.POST;

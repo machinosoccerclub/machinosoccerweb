@@ -1,9 +1,9 @@
-package machinosoccerweb.infra.google;
+package machinosoccerweb.google;
 
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import machinosoccerweb.infra.google.api.GoogleOAuth2Service;
+import machinosoccerweb.google.api.GoogleOAuth2Service;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import retrofit.RestAdapter;

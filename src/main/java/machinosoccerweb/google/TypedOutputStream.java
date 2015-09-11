@@ -1,4 +1,4 @@
-package machinosoccerweb.infra.google;
+package machinosoccerweb.google;
 
 import org.apache.commons.io.IOUtils;
 import retrofit.mime.TypedOutput;

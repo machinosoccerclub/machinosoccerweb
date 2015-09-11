@@ -1,6 +1,6 @@
-package machinosoccerweb.infra.google.api;
+package machinosoccerweb.google.api;
 
-import machinosoccerweb.infra.google.Entry;
+import machinosoccerweb.google.Entry;
 import retrofit.client.Response;
 import retrofit.http.*;
 import retrofit.mime.TypedOutput;
