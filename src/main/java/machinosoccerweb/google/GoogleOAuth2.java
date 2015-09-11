@@ -1,16 +1,16 @@
-package machinosc.services.google;
+package machinosoccerweb.google;
 
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import machinosc.services.google.api.OAuth2;
+import machinosoccerweb.google.api.GoogleOAuth2Service;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import retrofit.RestAdapter;
 import retrofit.converter.GsonConverter;
 
-@Service
-public class OAuth2Service {
+@Component
+public class GoogleOAuth2 {
   @Value("${google.api.clientId}")
   private String googleClientId;
 
@@ -22,7 +22,7 @@ public class OAuth2Service {
 
   public AccessToken refreshToken() {
 
-    OAuth2 authService = createRestAdapter().create(OAuth2.class);
+    GoogleOAuth2Service authService = createRestAdapter().create(GoogleOAuth2Service.class);
 
     AccessToken tokenResp = authService.refreshToken(
       this.googleClientId,
