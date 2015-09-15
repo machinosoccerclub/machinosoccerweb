@@ -68,3 +68,16 @@ footer {
 .fuelux .wizard .steps-container ul.steps li.completed a:visited {
   color: #999
 }
+
+/*
+ * for iphone 4 and 5
+ */
+@media only screen and (max-width: 320px) {
+  h1,h2{
+    font-size: 1.9em;
+  }
+
+  h3,h4,h5{
+    font-size: 1.6em;
+  }
+}
