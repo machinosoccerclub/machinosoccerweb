@@ -1,11 +1,11 @@
-package machinosc.services.google.api;
+package machinosoccerweb.google.api;
 
-import machinosc.services.google.AccessToken;
+import machinosoccerweb.google.AccessToken;
 import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
 import retrofit.http.POST;
 
-public interface OAuth2 {
+public interface GoogleOAuth2Service {
 
   @FormUrlEncoded
   @POST("/o/oauth2/token")

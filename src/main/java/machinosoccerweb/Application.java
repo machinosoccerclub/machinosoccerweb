@@ -1,4 +1,4 @@
-package machinosc;
+package machinosoccerweb;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -8,7 +8,7 @@ import org.springframework.context.annotation.ImportResource;
 
 @Configuration
 @EnableAutoConfiguration
-@ComponentScan
+@ComponentScan(basePackageClasses = Application.class, lazyInit = true)
 @ImportResource({"classpath*:applicationContext.xml"})
 public class Application {
   public static void main(String[] args) throws Exception {

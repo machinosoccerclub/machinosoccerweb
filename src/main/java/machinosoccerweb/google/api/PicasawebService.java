@@ -1,12 +1,11 @@
-package machinosc.services.google.api;
+package machinosoccerweb.google.api;
 
-import machinosc.services.google.Entry;
+import machinosoccerweb.google.Entry;
 import retrofit.client.Response;
 import retrofit.http.*;
-import retrofit.mime.TypedByteArray;
 import retrofit.mime.TypedOutput;
 
-public interface PicasaAlbum {
+public interface PicasawebService {
   @POST("/data/feed/api/user/{userID}/albumid/{albumID}")
   Entry uploadPhoto(
     @retrofit.http.Header("Authorization") String token,

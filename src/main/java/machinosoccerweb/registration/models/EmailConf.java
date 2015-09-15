@@ -1,4 +1,4 @@
-package machinosc.registration.models;
+package machinosoccerweb.registration.models;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
