@@ -1,11 +1,11 @@
 package machinosoccerweb.google;
 
-import org.apache.commons.io.IOUtils;
-import retrofit.mime.TypedOutput;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+
+import org.apache.commons.io.IOUtils;
+import retrofit.mime.TypedOutput;
 
 public class TypedOutputStream implements TypedOutput {
   private String fileName;

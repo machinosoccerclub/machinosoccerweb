@@ -18,7 +18,8 @@ public class IndexController {
   }
 
   @RequestMapping("/ping")
-  public @ResponseBody String ping() {
+  @ResponseBody
+  public String ping() {
     return "pong";
   }
 }

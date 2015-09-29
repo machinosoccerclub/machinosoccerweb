@@ -3,10 +3,10 @@
  */
 buildscript {
   dependencies {
-    classpath("org.springframework.boot:spring-boot-gradle-plugin:1.2.5.RELEASE")
-    classpath("com.wiredforcode:gradle-heroku-plugin:1.0.0")
-    classpath("org.springframework:springloaded:1.2.2.RELEASE")
-    classpath("io.spring.gradle:dependency-management-plugin:0.5.2.RELEASE")
+    classpath 'org.springframework.boot:spring-boot-gradle-plugin:1.2.5.RELEASE'
+    classpath 'com.wiredforcode:gradle-heroku-plugin:1.0.0'
+    classpath 'org.springframework:springloaded:1.2.2.RELEASE'
+    classpath 'io.spring.gradle:dependency-management-plugin:0.5.2.RELEASE'
   }
   repositories {
     jcenter()
@@ -20,11 +20,16 @@ buildscript {
 apply plugin: 'java'
 apply plugin: 'spring-boot'
 apply plugin: 'io.spring.dependency-management'
+apply plugin: 'checkstyle'
 apply plugin: 'idea'
 apply plugin: 'heroku'
 
 repositories {
   jcenter()
+}
+
+task wrapper(type: Wrapper) {
+  gradleVersion = '2.7'
 }
 
 defaultTasks 'build'
@@ -41,10 +46,10 @@ dependencyManagement {
 
 // In this section you declare the dependencies for your production and test code
 dependencies {
-  compile "org.springframework.boot:spring-boot-starter-web"
-  compile "org.springframework.boot:spring-boot-starter-thymeleaf"
-  compile "org.springframework.boot:spring-boot-starter-data-jpa"
-  compile "org.springframework.boot:spring-boot-starter-logging"
+  compile 'org.springframework.boot:spring-boot-starter-web'
+  compile 'org.springframework.boot:spring-boot-starter-thymeleaf'
+  compile 'org.springframework.boot:spring-boot-starter-data-jpa'
+  compile 'org.springframework.boot:spring-boot-starter-logging'
 
   compile 'com.squareup.retrofit:retrofit:1.9.0'
   compile 'com.squareup.retrofit:converter-simplexml:1.9.0'
@@ -60,6 +65,11 @@ dependencies {
   compile 'org.webjars:bootstrap:3.3.4'
   compile 'org.webjars.bower:fuelux:3.10.0'
 
+  checkstyle 'com.puppycrawl.tools:checkstyle:6.10.1'
+  // when modify the version of library, consider to update
+  // `config/checkstyle/checkstyle.xml` with the latest. see below.
+  // https://github.com/checkstyle/checkstyle/blob/master/src/main/resources/google_checks.xml
+
   runtime 'net.sourceforge.nekohtml:nekohtml:1.9.21'
   runtime 'org.flywaydb:flyway-core:3.2.1'
   runtime 'com.h2database:h2:1.4.188'
@@ -68,21 +78,42 @@ dependencies {
   testCompile 'junit:junit:4.12'
 }
 
+task checkstyleHtml {
+  def input = checkstyleMain.reports.xml.destination
+  def output = new File(checkstyleMain.reports.xml.destination.parent, 'main.html')
+  inputs.file input
+  outputs.file output
+
+  doLast {
+    // for html styling, we use below
+    // https://svn.apache.org/repos/asf/hive/trunk/checkstyle/checkstyle-noframes-sorted.xsl
+
+    ant.xslt(in: input,
+        style: file('./config/checkstyle/checkstyle-noframes-sorted.xsl'),
+        out: output)
+  }
+}
+
+checkstyleMain.finalizedBy checkstyleHtml
+
 bootRun {
   // specify active profile by
   // `gradle bootRun -PactiveProfile="your-profile-name"`
   //   or "development" as default
-  def profileName = project.hasProperty("activeProfile") ? project.activeProfile : "development"
+  def profileName = project.hasProperty('activeProfile') ? project.activeProfile : 'development'
   def appOpts = ["-Dspring.profiles.active=$profileName"]
-  def stdOpts = ["-Dfile.encoding=UTF8", "-Xmx384m", "-Xss512k"]
-  def gcOpts = ["-XX:+PrintGCDetails", "-XX:+PrintHeapAtGC", "-XX:+PrintGCDateStamps", "-XX:+PrintTenuringDistribution", "-XX:+UseConcMarkSweepGC"]
+  def stdOpts = ['-Dfile.encoding=UTF8', '-Xmx384m', '-Xss512k']
+  def gcOpts = ['-XX:+PrintGCDetails', '-XX:+PrintHeapAtGC',
+                '-XX:+PrintGCDateStamps', '-XX:+PrintTenuringDistribution',
+                '-XX:+UseConcMarkSweepGC']
+
   jvmArgs = appOpts + stdOpts + gcOpts
 }
 
 idea {
   module {
     inheritOutputDirs = false
-    outputDir = file("$buildDir/classes/main/")
+    outputDir = file('$buildDir/classes/main/')
   }
 }
 

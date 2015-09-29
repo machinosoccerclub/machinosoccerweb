@@ -1,5 +1,8 @@
 package machinosoccerweb.registration.web;
 
+import java.io.IOException;
+import java.io.InputStream;
+
 import machinosoccerweb.google.Picasaweb;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,9 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.io.InputStream;
-
 @Controller
 @EnableAutoConfiguration
 public class UploadController {
@@ -23,11 +23,13 @@ public class UploadController {
   private Picasaweb picasaweb;
 
   @RequestMapping(value = "/completed", method = RequestMethod.GET)
-  public String completed() { return "registration/completed"; }
+  public String completed() {
+    return "registration/completed";
+  }
 
   @RequestMapping(value = "/upload", method = RequestMethod.GET)
   public String uploadForm() {
-      return "registration/upload";
+    return "registration/upload";
   }
 
   @RequestMapping(value = "/upload", method = RequestMethod.POST)
@@ -36,10 +38,10 @@ public class UploadController {
                        @RequestParam("grade") String grade,
                        @RequestParam("gender") String gender,
                        @RequestParam("photo") MultipartFile file) throws IOException {
-    if(!file.isEmpty()) {
+    if (!file.isEmpty()) {
       String nameAndKana = normalizeName(name, namekana);
-      try(InputStream is = file.getInputStream()) {
-          picasaweb.uploadPhoto(
+      try (InputStream is = file.getInputStream()) {
+        picasaweb.uploadPhoto(
             file.getOriginalFilename(),
             nameAndKana,
             file.getContentType(),
@@ -48,7 +50,8 @@ public class UploadController {
       }
       return "redirect:/completed";
     } else {
-      logger.error("empty file posted ... name:{}, kana:{}, grade:{}, gender:{}", name, namekana, grade, gender);
+      logger.error("empty file posted ... name:{}, kana:{}, grade:{}, gender:{}",
+          name, namekana, grade, gender);
 
       return "redirect:/confirm-error";
     }

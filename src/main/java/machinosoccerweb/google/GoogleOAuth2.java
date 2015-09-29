@@ -25,10 +25,10 @@ public class GoogleOAuth2 {
     GoogleOAuth2Service authService = createRestAdapter().create(GoogleOAuth2Service.class);
 
     AccessToken tokenResp = authService.refreshToken(
-      this.googleClientId,
-      this.googleClientSecret,
-      this.googleRefreshToken,
-      "refresh_token"
+        this.googleClientId,
+        this.googleClientSecret,
+        this.googleRefreshToken,
+        "refresh_token"
     );
 
     return tokenResp;
@@ -36,12 +36,12 @@ public class GoogleOAuth2 {
 
   private RestAdapter createRestAdapter() {
     Gson gson = new GsonBuilder()
-      .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-      .create();
+        .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+        .create();
 
     return new RestAdapter.Builder()
-      .setEndpoint("https://accounts.google.com")
-      .setConverter(new GsonConverter(gson))
-      .build();
+        .setEndpoint("https://accounts.google.com")
+        .setConverter(new GsonConverter(gson))
+        .build();
   }
 }
