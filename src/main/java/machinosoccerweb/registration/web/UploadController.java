@@ -7,8 +7,10 @@ import machinosoccerweb.google.Picasaweb;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,11 +21,15 @@ import org.springframework.web.multipart.MultipartFile;
 public class UploadController {
   private static final Logger logger = LoggerFactory.getLogger(UploadController.class);
 
+  @Value("${machinosoccerweb.attendUrl}")
+  private String attendUrl;
+
   @Autowired
   private Picasaweb picasaweb;
 
   @RequestMapping(value = "/completed", method = RequestMethod.GET)
-  public String completed() {
+  public String completed(Model model) {
+    model.addAttribute("attendUrl", attendUrl);
     return "registration/completed";
   }
 
