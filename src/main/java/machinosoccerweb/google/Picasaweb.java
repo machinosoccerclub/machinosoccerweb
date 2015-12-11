@@ -51,6 +51,22 @@ public class Picasaweb {
     );
   }
 
+  public boolean isSupportedMediaType(String contentType) {
+    if(contentType==null) return false;
+
+    switch(contentType) {
+      case "image/bmp":
+      case "image/gif":
+      case "image/jpeg":
+      case "image/jpg":
+      case "image/png":
+        return true;
+
+      default:
+        return false;
+    }
+  }
+
   private PicasawebService createPicasaAlbumService() {
     RestAdapter picasaRestAdapter = setupAdapter(
         new RestAdapter.Builder()
