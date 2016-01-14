@@ -6,7 +6,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import lombok.Data;
+
 @Entity
+@Data
 public class EmailConf {
   public EmailConf() {
 
@@ -26,7 +29,7 @@ public class EmailConf {
 
   private String recordId;
 
-  private Date confirmedAt = new Date();
-
   private Date appliedAt;
+
+  private Date confirmedAt = new Date();
 }

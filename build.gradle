@@ -28,6 +28,14 @@ repositories {
   jcenter()
 }
 
+configurations {
+  provided
+}
+
+sourceSets {
+  main { compileClasspath += configurations.provided }
+}
+
 task wrapper(type: Wrapper) {
   gradleVersion = '2.7'
 }
@@ -65,6 +73,8 @@ dependencies {
   compile 'org.webjars:bootstrap:3.3.4'
   compile 'org.webjars.bower:fuelux:3.10.0'
 
+  provided 'org.projectlombok:lombok:1.16.6'
+
   checkstyle 'com.puppycrawl.tools:checkstyle:6.10.1'
   // when modify the version of library, consider to update
   // `config/checkstyle/checkstyle.xml` with the latest. see below.
@@ -100,20 +110,33 @@ bootRun {
   // specify active profile by
   // `gradle bootRun -PactiveProfile="your-profile-name"`
   //   or "development" as default
+
+  // specify NOT use gc opts by
+  // `gradle bootRun -PnoGCOpts`
+
+  // run debug mode 
+  // `gradle bootRun -PdebugPort` # to use port number 5005 as default
+  // or `gradle bootRun -PdebugPort=5006`
+
   def profileName = project.hasProperty('activeProfile') ? project.activeProfile : 'development'
   def appOpts = ["-Dspring.profiles.active=$profileName"]
   def stdOpts = ['-Dfile.encoding=UTF8', '-Xmx384m', '-Xss512k']
-  def gcOpts = ['-XX:+PrintGCDetails', '-XX:+PrintHeapAtGC',
-                '-XX:+PrintGCDateStamps', '-XX:+PrintTenuringDistribution',
-                '-XX:+UseConcMarkSweepGC']
+  def gcOpts =  project.hasProperty('noGCOpts') ? [] :
+                ['-XX:+PrintGCDetails', '-XX:+PrintHeapAtGC',
+                 '-XX:+PrintGCDateStamps', '-XX:+PrintTenuringDistribution',
+                 '-XX:+UseConcMarkSweepGC']
+  def debugOpts = project.hasProperty('debugPort') ? ["-Xdebug",
+                 "-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=${project.debugPort ?: 5005}"] : []
 
-  jvmArgs = appOpts + stdOpts + gcOpts
+  jvmArgs = appOpts + stdOpts + gcOpts + debugOpts
 }
 
 idea {
   module {
     inheritOutputDirs = false
     outputDir = file('$buildDir/classes/main/')
+
+    scopes.PROVIDED.plus += [configurations.provided]
   }
 }
 
