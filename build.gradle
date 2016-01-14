@@ -57,6 +57,7 @@ dependencies {
   compile 'org.springframework.boot:spring-boot-starter-web'
   compile 'org.springframework.boot:spring-boot-starter-thymeleaf'
   compile 'org.springframework.boot:spring-boot-starter-data-jpa'
+  compile 'org.springframework.boot:spring-boot-starter-security'
   compile 'org.springframework.boot:spring-boot-starter-logging'
 
   compile 'com.squareup.retrofit:retrofit:1.9.0'
@@ -86,6 +87,10 @@ dependencies {
   runtime 'org.postgresql:postgresql:9.4-1202-jdbc42'
 
   testCompile 'junit:junit:4.12'
+}
+
+compileJava {
+  options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
 }
 
 task checkstyleHtml {
