@@ -17,7 +17,7 @@ public class LoginUser implements UserDetails {
 
   private final Collection<? extends GrantedAuthority> authorities;
 
-  private final long userId;
+  private final long familyId;
 
   @Override
   public boolean isAccountNonExpired() {

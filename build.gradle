@@ -18,6 +18,7 @@ buildscript {
 }
 
 apply plugin: 'java'
+apply plugin: 'groovy'
 apply plugin: 'spring-boot'
 apply plugin: 'io.spring.dependency-management'
 apply plugin: 'checkstyle'
@@ -87,6 +88,7 @@ dependencies {
   runtime 'org.postgresql:postgresql:9.4-1202-jdbc42'
 
   testCompile 'junit:junit:4.12'
+  testCompile 'org.codehaus.groovy:groovy-test:2.4.5'
 }
 
 compileJava {
