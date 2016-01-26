@@ -37,8 +37,6 @@ public class Member {
   @OneToOne
   private MemberPhoto photo;
 
-//  private String notesForActivity;
-
   @Temporal(TemporalType.DATE)
   @DateTimeFormat(pattern = "yyyy-MM")
   private Date joinedAt;

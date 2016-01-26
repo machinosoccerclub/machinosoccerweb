@@ -36,15 +36,19 @@ public class MypageController {
 
   @RequestMapping("/mypage")
   public String index(@AuthenticationPrincipal LoginUser loginUser, Model model) {
+    Long familyId = loginUser.getFamilyId();
+    if (!loginUser.isParentRegistered()) {
+      return "redirect:/mypage/contact";
+    }
 
-    Parent parent = parentRepository.findOne(loginUser.getFamilyId());
+    Parent parent = parentRepository.findOne(familyId);
     model.addAttribute("parent", parent);
     log.debug("loginUser:{}, parent:{}", loginUser, parent);
 
-    List<Member> members = memberRepository.findByFamilyId(loginUser.getFamilyId());
+    List<Member> members = memberRepository.findByFamilyId(familyId);
     model.addAttribute("members", members);
 
-    List<Email> emails = emailRepository.findByFamilyId(loginUser.getFamilyId());
+    List<Email> emails = emailRepository.findByFamilyId(familyId);
     model.addAttribute("contacts", emails);
 
     return "mypage/index";

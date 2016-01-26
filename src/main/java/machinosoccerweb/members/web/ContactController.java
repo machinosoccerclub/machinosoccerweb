@@ -1,0 +1,62 @@
+package machinosoccerweb.members.web;
+
+import lombok.extern.slf4j.Slf4j;
+import machinosoccerweb.members.models.Parent;
+import machinosoccerweb.members.repositories.ParentRepository;
+import machinosoccerweb.security.LoginUser;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.web.bind.annotation.AuthenticationPrincipal;
+import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+@Slf4j
+@Controller
+public class ContactController {
+
+  private final ParentRepository parentRepository;
+
+  @Autowired
+  public ContactController(ParentRepository parentRepository) {
+    this.parentRepository = parentRepository;
+  }
+
+  @RequestMapping(value = "/mypage/contact", method = RequestMethod.GET)
+  public String contactForm(@AuthenticationPrincipal LoginUser loginUser,
+                            @ModelAttribute("parent") ParentForm parentForm) {
+
+    if (loginUser.isParentRegistered()) {
+      Parent parent = parentRepository.findOne(loginUser.getFamilyId());
+      BeanUtils.copyProperties(parent, parentForm);
+    } else {
+      parentForm.setNew(true);
+    }
+
+    return "mypage/contact";
+  }
+
+  @RequestMapping(value = "/mypage/contact", method = RequestMethod.POST)
+  public String saveContact(@AuthenticationPrincipal LoginUser loginUser,
+                            @Validated @ModelAttribute("parent") ParentForm parentForm,
+                            BindingResult result) {
+    if (result.hasErrors()) {
+      log.debug("validation error:{}", result);
+      log.debug("parent form:{}", parentForm);
+      return "mypage/contact";
+    }
+
+    Parent parent = new Parent();
+    parent.setFamilyId(loginUser.getFamilyId());
+    BeanUtils.copyProperties(parentForm, parent);
+    Parent saved = parentRepository.save(parent);
+    // todo: save email address correlated with this parent.
+
+    // todo: need to update the authenticated principal
+    return "redirect:/emailConf?a=" + loginUser.getUsername() + "&k=" + loginUser.getPassword();
+    //return "redirect:/mypage";
+  }
+}

@@ -63,7 +63,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             username,
             username,
             Arrays.asList(new SimpleGrantedAuthority("user")),
-            username.hashCode());  // temporary
+            Long.valueOf(username.hashCode()));
   }
 
   private void setPostOnlyToFalse(HttpSecurity http) throws Exception {

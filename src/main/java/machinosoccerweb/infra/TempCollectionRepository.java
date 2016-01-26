@@ -68,10 +68,10 @@ public abstract class TempCollectionRepository<T, ID extends Serializable> {
 
   public T save(T entity) {
     Optional<ID> id = idValueResolver.getOpt(entity);
-    if(id.isPresent()) {
+    if (id.isPresent()) {
       findIndex(id.get())
           .map(i -> entities.set(i, entity))
-          .orElseGet(() -> {entities.add(entity); return entity;});
+          .orElseGet(() -> addEntity(entity));
     } else {
       idValueResolver.set(entity, convert(incrementAndGetId()));
       entities.add(entity);
@@ -87,9 +87,9 @@ public abstract class TempCollectionRepository<T, ID extends Serializable> {
   }
 
   protected Optional<Integer> findIndex(ID id) {
-    for(int i=0; i<entities.size(); i++) {
-      T e = entities.get(i);
-      if(id.equals(idValueResolver.get(e))) {
+    for (int i = 0; i < entities.size(); i++) {
+      T entity = entities.get(i);
+      if (id.equals(idValueResolver.get(entity))) {
         return Optional.of(i);
       }
     }
@@ -101,6 +101,11 @@ public abstract class TempCollectionRepository<T, ID extends Serializable> {
   }
 
   protected abstract ID convert(long newId);
+
+  private T addEntity(T entity) {
+    entities.add(entity);
+    return entity;
+  }
 
   private class FieldWrapper<T, R> {
     private final Field field;

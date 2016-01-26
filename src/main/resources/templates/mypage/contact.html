@@ -1,0 +1,140 @@
+<!DOCTYP html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+  <title>連絡先登録 | まちのサッカークラブ</title>
+
+  <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+  <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="../static/css/machinosoccerweb.css"
+        th:href="@{/css/machinosoccerweb.css}" media="all">
+</head>
+<body th:with="numEmails=3">
+<form class="form-horizontal" role="form" method="post" th:action="@{/mypage/contact}"
+      th:novalidate="${@environment.acceptsProfiles('development')}">
+  <fieldset th:object="${parent}">
+    <legend>保護者連絡先</legend>
+
+    <!-- ===================================================================================== -->
+    <!--   Names                                                                               -->
+    <!-- ===================================================================================== -->
+    <div class="form-group required">
+      <label class="col-sm-2 control-label">名前（漢字）</label>
+
+      <div class="col-sm-10">
+        <div class="form-group row inline-form-group">
+          <label for="familyName" class="col-sm-1 control-label">
+            <small>姓</small>
+          </label>
+
+          <div class="col-sm-3">
+            <input type="text" class="form-control" id="familyName" placeholder="街坂"
+                   th:field="*{familyName}" required>
+            <span th:if="${#fields.hasErrors('familyName')}" class="text-danger"
+                  th:errors="*{familyName}">Error</span>
+          </div>
+          <label for="givenName" class="col-sm-1 control-label">
+            <small>名</small>
+          </label>
+
+          <div class="col-sm-3">
+            <input type="text" class="form-control" id="givenName" placeholder="太郎"
+                   th:field="*{givenName}" required>
+            <span th:if="${#fields.hasErrors('givenName')}" class="text-danger"
+                  th:errors="*{givenName}">Error</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group required">
+      <label class="col-sm-2 control-label">名前（カタカナ）</label>
+
+      <div class="col-sm-10">
+        <div class="form-group row inline-form-group">
+          <label for="familyNameKana" class="col-sm-1 control-label">
+            <small>セイ</small>
+          </label>
+
+          <div class="col-sm-3">
+            <input type="text" class="form-control" id="familyNameKana" placeholder="マチサカ"
+                   th:field="*{familyNameKana}" required>
+              <span th:if="${#fields.hasErrors('familyNameKana')}" class="text-danger"
+                    th:errors="*{familyNameKana}">Error</span>
+          </div>
+          <label for="givenNameKana" class="col-sm-1 control-label">
+            <small>メイ</small>
+          </label>
+
+          <div class="col-sm-3">
+            <input type="text" class="form-control" id="givenNameKana" placeholder="タロウ"
+                   th:field="*{givenNameKana}" required>
+            <span th:if="${#fields.hasErrors('givenNameKana')}" class="text-danger"
+                  th:errors="*{givenNameKana}">Error</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================================================================================== -->
+    <!--   Telephone numbers                                                                   -->
+    <!-- ===================================================================================== -->
+    <div class="form-group required">
+      <label for="phoneNumber1" class="col-sm-2 control-label">電話番号1</label>
+
+      <div class="col-sm-8">
+        <input type="tel" class="form-control" id="phoneNumber1" placeholder="012-3456-7890"
+               th:field="*{phoneNumber1}" required>
+        <span class="help-block">活動中に連絡が取れる連絡先を入力してください</span>
+        <span th:if="${#fields.hasErrors('phoneNumber1')}" class="text-danger"
+              th:errors="*{phoneNumber1}">Error</span>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="phoneNumber2" class="col-sm-2 control-label">電話番号2</label>
+
+      <div class="col-sm-8">
+        <input type="tel" class="form-control" id="phoneNumber2"
+               th:field="*{phoneNumber2}">
+        <span class="help-block">電話番号は２つまで登録できます</span>
+        <span th:if="${#fields.hasErrors('phoneNumber2')}" class="text-danger"
+              th:errors="*{phoneNumber2}">Error</span>
+      </div>
+    </div>
+
+    <!-- ===================================================================================== -->
+    <!--   Buttons                                                                             -->
+    <!-- ===================================================================================== -->
+    <div class="form-group">
+
+      <div class="col-sm-8" th:if="${isNew}">
+        <input type="submit" class="btn btn-success form-control" value="登録して次に進む">
+      </div>
+      <div class="col-sm-8" th:unless="${isNew}">
+        <input type="submit" class="btn btn-success" value="更新する">
+        <a type="button" class="btn btn-default" th:href="@{|/mypage|}">
+          保存せず戻る
+        </a>
+      </div>
+    </div>
+  </fieldset>
+</form>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script>
+  $('#addEmailCheck').change(function(){
+	  if ($(this).is(':checked')) {
+      $('#addEmailPane').removeClass('hidden');
+      $('#additionalEmail').attr('required', '');
+	  } else {
+      $('#addEmailPane').addClass('hidden');
+      $('#additionalEmail').removeAttr('required');
+	  }
+  });
+</script>
+
+</body>
+</html>

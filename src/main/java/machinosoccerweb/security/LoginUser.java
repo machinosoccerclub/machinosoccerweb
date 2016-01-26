@@ -17,7 +17,7 @@ public class LoginUser implements UserDetails {
 
   private final Collection<? extends GrantedAuthority> authorities;
 
-  private final long familyId;
+  private final Long familyId;
 
   @Override
   public boolean isAccountNonExpired() {
@@ -37,5 +37,9 @@ public class LoginUser implements UserDetails {
   @Override
   public boolean isEnabled() {
     return true;
+  }
+
+  public boolean isParentRegistered() {
+    return familyId != null;
   }
 }
