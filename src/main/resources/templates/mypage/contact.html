@@ -15,6 +15,9 @@
         th:href="@{/css/machinosoccerweb.css}" media="all">
 </head>
 <body th:with="numEmails=3">
+<p th:if="${parent.blank}" class="bg-info">
+  新規ご入会ありがとうございます。保護者の方の連絡先をご登録ください。
+</p>
 <form class="form-horizontal" role="form" method="post" th:action="@{/mypage/contact}"
       th:novalidate="${@environment.acceptsProfiles('development')}">
   <fieldset th:object="${parent}">
@@ -87,9 +90,9 @@
       <label for="phoneNumber1" class="col-sm-2 control-label">電話番号1</label>
 
       <div class="col-sm-8">
+        <span class="help-block">活動中、緊急の場合に連絡が取れるものを入力してください</span>
         <input type="tel" class="form-control" id="phoneNumber1" placeholder="012-3456-7890"
                th:field="*{phoneNumber1}" required>
-        <span class="help-block">活動中に連絡が取れる連絡先を入力してください</span>
         <span th:if="${#fields.hasErrors('phoneNumber1')}" class="text-danger"
               th:errors="*{phoneNumber1}">Error</span>
       </div>
@@ -98,9 +101,9 @@
       <label for="phoneNumber2" class="col-sm-2 control-label">電話番号2</label>
 
       <div class="col-sm-8">
+        <span class="help-block">電話番号は２つまで登録できます</span>
         <input type="tel" class="form-control" id="phoneNumber2"
                th:field="*{phoneNumber2}">
-        <span class="help-block">電話番号は２つまで登録できます</span>
         <span th:if="${#fields.hasErrors('phoneNumber2')}" class="text-danger"
               th:errors="*{phoneNumber2}">Error</span>
       </div>
@@ -111,10 +114,10 @@
     <!-- ===================================================================================== -->
     <div class="form-group">
 
-      <div class="col-sm-8" th:if="${isNew}">
+      <div class="col-sm-8" th:if="*{blank}">
         <input type="submit" class="btn btn-success form-control" value="登録して次に進む">
       </div>
-      <div class="col-sm-8" th:unless="${isNew}">
+      <div class="col-sm-8" th:unless="*{blank}">
         <input type="submit" class="btn btn-success" value="更新する">
         <a type="button" class="btn btn-default" th:href="@{|/mypage|}">
           保存せず戻る

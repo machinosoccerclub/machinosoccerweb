@@ -24,5 +24,5 @@ public class ParentForm {
   @Pattern(regexp = "[\\-0-9]*", message = "{PhoneNumber.message}")
   private String phoneNumber2;
 
-  private boolean isNew;
+  private boolean isBlank;
 }

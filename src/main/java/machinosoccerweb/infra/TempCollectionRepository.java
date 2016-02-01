@@ -25,6 +25,7 @@ public abstract class TempCollectionRepository<T, ID extends Serializable> {
   private FieldWrapper<T, Long> familyIdValueResolver;
 
   protected TempCollectionRepository() {
+    this(Collections.emptyList());
   }
 
   protected TempCollectionRepository(List<T> entities) {
@@ -43,7 +44,7 @@ public abstract class TempCollectionRepository<T, ID extends Serializable> {
 
     idValueResolver = idField
         .map(f -> new FieldWrapper<T, ID>(f))
-        .orElse(new NullFieldWrapper<T, ID>());
+        .orElseThrow(() -> new RuntimeException("no field found annotated with @Id "));
 
     log.debug("ID value resolver: {}, {}", idField, idValueResolver);
 

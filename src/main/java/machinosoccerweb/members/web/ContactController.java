@@ -1,7 +1,9 @@
 package machinosoccerweb.members.web;
 
 import lombok.extern.slf4j.Slf4j;
+import machinosoccerweb.members.models.Email;
 import machinosoccerweb.members.models.Parent;
+import machinosoccerweb.members.repositories.EmailRepository;
 import machinosoccerweb.members.repositories.ParentRepository;
 import machinosoccerweb.security.LoginUser;
 import org.springframework.beans.BeanUtils;
@@ -20,9 +22,12 @@ public class ContactController {
 
   private final ParentRepository parentRepository;
 
+  private final EmailRepository emailRepository;
+
   @Autowired
-  public ContactController(ParentRepository parentRepository) {
+  public ContactController(ParentRepository parentRepository, EmailRepository emailRepository) {
     this.parentRepository = parentRepository;
+    this.emailRepository = emailRepository;
   }
 
   @RequestMapping(value = "/mypage/contact", method = RequestMethod.GET)
@@ -33,7 +38,7 @@ public class ContactController {
       Parent parent = parentRepository.findOne(loginUser.getFamilyId());
       BeanUtils.copyProperties(parent, parentForm);
     } else {
-      parentForm.setNew(true);
+      parentForm.setBlank(true);
     }
 
     return "mypage/contact";
@@ -45,7 +50,10 @@ public class ContactController {
                             BindingResult result) {
     if (result.hasErrors()) {
       log.debug("validation error:{}", result);
-      log.debug("parent form:{}", parentForm);
+      if (!loginUser.isParentRegistered()) {
+        parentForm.setBlank(true);
+      }
+
       return "mypage/contact";
     }
 
@@ -53,10 +61,16 @@ public class ContactController {
     parent.setFamilyId(loginUser.getFamilyId());
     BeanUtils.copyProperties(parentForm, parent);
     Parent saved = parentRepository.save(parent);
-    // todo: save email address correlated with this parent.
 
-    // todo: need to update the authenticated principal
-    return "redirect:/emailConf?a=" + loginUser.getUsername() + "&k=" + loginUser.getPassword();
-    //return "redirect:/mypage";
+    if (loginUser.isParentRegistered()) {
+      return "redirect:/mypage";
+    } else {
+      Email email = new Email(loginUser.getEmailAddress(), true, true,
+          saved.getFamilyId(), Email.Status.AddressConfirmed, "user");
+      emailRepository.save(email);
+
+      // todo: need to update the authenticated principal
+      return "redirect:/emailConf?a=" + loginUser.getUsername() + "&k=" + loginUser.getPassword();
+    }
   }
 }

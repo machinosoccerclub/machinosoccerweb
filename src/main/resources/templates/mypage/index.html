@@ -13,6 +13,11 @@
         th:href="@{/css/machinosoccerweb.css}" media="all">
 </head>
 <body>
+<section>
+  <form th:action="@{/logout}" method="post">
+    <input type="submit" value="ログアウト" class="btn btn-default" />
+  </form>
+</section>
 <h2>会員情報</h2>
 
 <h3>参加者情報</h3>

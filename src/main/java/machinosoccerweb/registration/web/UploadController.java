@@ -21,15 +21,12 @@ import org.springframework.web.multipart.MultipartFile;
 public class UploadController {
   private static final Logger logger = LoggerFactory.getLogger(UploadController.class);
 
-  @Value("${machinosoccerweb.attendUrl}")
-  private String attendUrl;
-
   @Autowired
   private Picasaweb picasaweb;
 
   @RequestMapping(value = "/completed", method = RequestMethod.GET)
   public String completed(Model model) {
-    model.addAttribute("attendUrl", attendUrl);
+    model.addAttribute("attendUrl", "");
     return "registration/completed";
   }
 

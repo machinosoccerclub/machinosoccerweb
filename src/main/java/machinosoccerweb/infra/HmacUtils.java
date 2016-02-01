@@ -14,12 +14,15 @@ import org.springframework.stereotype.Component;
 public class HmacUtils {
   private static final String ALGORITHM_NAME = "HmacSHA256";
 
-  public Mac createHmacSha256(String phrase) throws GeneralSecurityException {
-    Mac mac = Mac.getInstance(ALGORITHM_NAME);
-    Key key = new SecretKeySpec(phrase.getBytes(), ALGORITHM_NAME);
-    mac.init(key);
-
-    return mac;
+  public Mac createHmacSha256(String phrase) {
+    try {
+      Mac mac = Mac.getInstance(ALGORITHM_NAME);
+      Key key = new SecretKeySpec(phrase.getBytes(), ALGORITHM_NAME);
+      mac.init(key);
+      return mac;
+    } catch (GeneralSecurityException e) {
+      throw new IllegalStateException(e);
+    }
   }
 
   public byte[] calcHash(Mac hmac, byte[] input) {

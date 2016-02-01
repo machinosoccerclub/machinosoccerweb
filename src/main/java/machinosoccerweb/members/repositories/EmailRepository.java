@@ -16,7 +16,8 @@ public class EmailRepository extends TempCollectionRepository<Email, String> {
         new Email("user@example.com",
             true, true,
             "user".hashCode(),
-            Email.Status.AddressConfirmed)));
+            Email.Status.AddressConfirmed,
+            "user")));
   }
 
   @Override

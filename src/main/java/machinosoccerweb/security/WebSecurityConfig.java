@@ -5,6 +5,7 @@ import java.util.Arrays;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -23,10 +24,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   private static final String ConfirmURL = "/emailConf";
 
   private static final String[] AccessPermittedPaths = {
-    "/", ConfirmURL, "/css/**", "/favicon.ico", "/webjars/**", "/error"
+    "/", "/ping", ConfirmURL, "/css/**", "/favicon.ico", "/webjars/**", "/error",
+    "/requestLoginLink", "/loginLinkSent"
   };
 
   private static final Object[] NoArgs = {};
+
+  @Autowired
+  private LoginUserDetailsService loginUserDetailsService;
 
   @Override
   protected void configure(HttpSecurity http) throws Exception {
@@ -42,7 +47,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         .passwordParameter("k")
         .loginProcessingUrl(ConfirmURL)
         .defaultSuccessUrl("/mypage")
-        .failureUrl("/")
+        .failureUrl("/loginError")
         .permitAll()
         .and()
       .logout()
@@ -54,16 +59,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   @Override
   protected void configure(AuthenticationManagerBuilder auth) throws Exception {
     auth
-      .userDetailsService(createUserDetailsService());
-  }
-
-  private UserDetailsService createUserDetailsService() {
-    return  (String username) ->
-        new LoginUser(
-            username,
-            username,
-            Arrays.asList(new SimpleGrantedAuthority("user")),
-            Long.valueOf(username.hashCode()));
+      .userDetailsService(loginUserDetailsService);
   }
 
   private void setPostOnlyToFalse(HttpSecurity http) throws Exception {

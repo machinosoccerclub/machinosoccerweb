@@ -1,0 +1,33 @@
+<!DOCTYP html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+  <title th:text="#{view.title('送信しました')}"></title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="../static/css/machinosoccerweb.css"
+        th:href="@{/css/machinosoccerweb.css}" media="all">
+</head>
+<body>
+  <section>
+    <div class="bg-info">
+      <span th:text="${email}"></span>にログインURLを送信しました。
+      メール内のURLをクリックしてログインしてください。
+      しばらくしてもメールが届かない場合は XXXXXXX
+      <p class="text-warning">TODO: 清書</p>
+      <p class="text-warning">TODO: 新規登録の場合の記載</p>
+    </div>
+  </section>
+  <section th:if="${@environment.acceptsProfiles('development')}">
+    <div class="bg-danger">
+      <span>送信されるメール本文です。本番では表示されません</span>
+      <div th:text="${message}" class="well"></div>
+      <span>ログインリンクボタンです。本番では表示されません</span>
+      <a th:href="@{|${loginLink}|}" class="btn btn-danger">ログインリンク</a>
+    </div>
+  </section>
+</body>
+</html>

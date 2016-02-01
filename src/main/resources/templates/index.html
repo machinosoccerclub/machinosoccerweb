@@ -5,8 +5,11 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-  <title>まちのサッカークラブ</title>
-  <link rel="stylesheet" href="css/machinosoccerweb.css" media="all"/>
+  <title th:text="#{view.title('ようこそ')}"></title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="../static/css/machinosoccerweb.css"
+        th:href="@{/css/machinosoccerweb.css}" media="all">
 </head>
 <body>
 <div class="container">
@@ -16,9 +19,17 @@
     </hgroup>
   </header>
   <div class="main">
-    <h2></h2>
+    <h2>ログインURLの取得</h2>
     <section>
-      ・・・・・・
+      <form th:action="@{/requestLoginLink}" method="post"
+            th:novalidate="${@environment.acceptsProfiles('development')}">
+        <fieldset>
+          <input type="email" name="email" th:value="${email}"/>
+           <span th:if="${error}" th:text="#{${error}}" class="text-danger"></span>
+          <input type="submit" class="btn btn-success" value="ログインURLをこのアドレスに送る" />
+        </fieldset>
+      </form>
+      <p class="text-warning">TODO: 清書や整形が必要</p>
     </section>
   </div>
 </div>
