@@ -1,11 +1,15 @@
 package machinosoccerweb.members.web;
 
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import machinosoccerweb.infra.validator.Katakana;
+import machinosoccerweb.infra.validator.TelephoneNumber;
 import machinosoccerweb.members.models.Email;
 import machinosoccerweb.members.models.Parent;
 import machinosoccerweb.members.repositories.EmailRepository;
 import machinosoccerweb.members.repositories.ParentRepository;
 import machinosoccerweb.security.LoginUser;
+import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -72,5 +76,27 @@ public class ContactController {
       // todo: need to update the authenticated principal
       return "redirect:/emailConf?a=" + loginUser.getUsername() + "&k=" + loginUser.getPassword();
     }
+  }
+
+  @Data
+  public static class ParentForm {
+    @NotBlank
+    private String givenName;
+    @NotBlank
+    private String familyName;
+    @NotBlank
+    @Katakana
+    private String givenNameKana;
+    @NotBlank
+    @Katakana
+    private String familyNameKana;
+
+    @NotBlank
+    @TelephoneNumber
+    private String phoneNumber1;
+    @TelephoneNumber
+    private String phoneNumber2;
+
+    private boolean isBlank;
   }
 }
