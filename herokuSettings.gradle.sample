@@ -1,6 +1,0 @@
-heroku {
-    appName = 'some-unique-app-name'
-
-    //get this from heroku
-    apiKey = 'my-api-key'
-}

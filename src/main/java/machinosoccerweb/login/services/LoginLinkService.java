@@ -1,6 +1,6 @@
 package machinosoccerweb.login.services;
 
-import java.security.GeneralSecurityException;
+import java.nio.charset.StandardCharsets;
 import java.time.Clock;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -10,12 +10,10 @@ import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import machinosoccerweb.infra.HmacUtils;
 import machinosoccerweb.login.models.LoginLinkRequest;
-import machinosoccerweb.login.models.LoginRequester;
 import machinosoccerweb.login.repositories.LoginLinkRequestRepository;
 import machinosoccerweb.members.models.Email;
 import machinosoccerweb.members.repositories.EmailRepository;
 import machinosoccerweb.security.LoginUser;
-import org.apache.commons.io.Charsets;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -53,11 +51,11 @@ public class LoginLinkService {
     String dateAddr = dateFormatter.format(today) + emailAddress;
 
     String encodedDateAddr =
-        Base64.getEncoder().encodeToString(dateAddr.getBytes(Charsets.UTF_8));
+        Base64.getEncoder().encodeToString(dateAddr.getBytes(StandardCharsets.UTF_8));
 
     String signature = hmacUtils.calcHashToHexString(
         hmacUtils.createHmacSha256(confPhrase),
-        dateAddr.getBytes(Charsets.UTF_8));
+        dateAddr.getBytes(StandardCharsets.UTF_8));
 
     return new LoginLinkRequest(encodedDateAddr, signature, emailAddress, today);
   }

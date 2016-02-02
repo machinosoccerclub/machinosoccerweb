@@ -3,7 +3,7 @@ package machinosoccerweb.registration.web;
 import java.io.IOException;
 import java.io.InputStream;
 
-import machinosoccerweb.google.Picasaweb;
+//import machinosoccerweb.google.Picasaweb;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +21,8 @@ import org.springframework.web.multipart.MultipartFile;
 public class UploadController {
   private static final Logger logger = LoggerFactory.getLogger(UploadController.class);
 
-  @Autowired
-  private Picasaweb picasaweb;
+//  @Autowired
+//  private Picasaweb picasaweb;
 
   @RequestMapping(value = "/completed", method = RequestMethod.GET)
   public String completed(Model model) {
@@ -44,12 +44,12 @@ public class UploadController {
     if (!file.isEmpty()) {
       String nameAndKana = normalizeName(name, namekana);
       try (InputStream is = file.getInputStream()) {
-        picasaweb.uploadPhoto(
-            file.getOriginalFilename(),
-            nameAndKana,
-            file.getContentType(),
-            new String[]{grade, gender},
-            is);
+//        picasaweb.uploadPhoto(
+//            file.getOriginalFilename(),
+//            nameAndKana,
+//            file.getContentType(),
+//            new String[]{grade, gender},
+//            is);
       }
       return "redirect:/completed";
     } else {
