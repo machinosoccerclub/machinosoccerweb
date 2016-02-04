@@ -2,6 +2,7 @@ package machinosoccerweb.members.models;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import lombok.Data;
@@ -10,7 +11,7 @@ import lombok.Data;
 @Data
 public class Parent {
   @Id
-  @GeneratedValue
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long familyId;
 
   private String givenName;

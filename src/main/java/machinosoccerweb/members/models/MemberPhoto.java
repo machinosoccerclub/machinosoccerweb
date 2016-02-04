@@ -10,6 +10,10 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class MemberPhoto {
+  public MemberPhoto() {
+    // this is for JPA
+  }
+
   @Id
   private String memberNo;
 

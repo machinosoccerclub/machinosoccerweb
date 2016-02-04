@@ -1,17 +1,17 @@
 package machinosoccerweb.members.models;
 
 import java.util.Date;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
-import javax.validation.constraints.NotNull;
 
 import lombok.Data;
-import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -21,11 +21,8 @@ public class Member {
   private String memberNo;
 
   private String givenName;
-
   private String familyName;
-
   private String givenNameKana;
-
   private String familyNameKana;
 
   @Enumerated
@@ -34,7 +31,8 @@ public class Member {
   @Enumerated
   private Gender gender;
 
-  @OneToOne
+  @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+  @PrimaryKeyJoinColumn
   private MemberPhoto photo;
 
   @Temporal(TemporalType.DATE)
@@ -42,5 +40,4 @@ public class Member {
   private Date joinedAt;
 
   private Long familyId;
-
 }

@@ -1,10 +1,11 @@
-import machinosoccerweb.members.repositories.ParentRepository
+package machinosoccerweb.members.repositories
+
 import machinosoccerweb.members.models.Parent
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 
-class ParentRepositoryTest {
+class TempParentRepositoryTest {
   private ParentRepository repository
 
   @Before
@@ -17,7 +18,7 @@ class ParentRepositoryTest {
     def parent = new Parent(givenName: "giv", familyName: "fam")
 
     def savedParent = repository.save(parent)
-    Assert.assertNotNull(savedParent.familyId)
+    assert savedParent.familyId != null
   }
 
 
@@ -28,16 +29,16 @@ class ParentRepositoryTest {
 
     def found = repository.findOne(34987L)
 
-    Assert.assertNotNull(found)
+    assert found != null
   }
 
-    @Test
+  @Test
   public void findById() {
     def parent = new Parent(familyId: 34987L)
     repository.save(parent)
 
     def found = repository.findByFamilyId(34987L)
 
-    Assert.assertNotNull(found)
+    assert found != null
   }
 }
