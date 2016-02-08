@@ -13,6 +13,8 @@ import org.springframework.boot.test.SpringApplicationConfiguration
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner
 
+import java.util.stream.Collectors
+
 @RunWith(SpringJUnit4ClassRunner)
 @SpringApplicationConfiguration(Application)
 @EnableConfigurationProperties
@@ -77,5 +79,31 @@ class MemberRepositoryTest {
     memberRepository.saveAndFlush(member)
 
     assert memberRepository.findOne(memberNo).photo == memberPhoto
+  }
+
+  @Test
+  void serialNo() {
+    Long first = memberRepository.getNextSerialNumber()
+
+    Long second = memberRepository.getNextSerialNumber()
+
+    assert first + 1 == second
+  }
+
+  def getSerial = { int n ->
+    print "$n,"
+    def serial = memberRepository.getNextSerialNumber()
+    sleep((n % 3) * 100)
+    serial
+  }
+
+  @Test
+  void parallelSequence() {
+    def serialNumbers = (0..<50).parallelStream()
+        .map(getSerial)
+        .collect(Collectors.toSet())
+    // collect to set so that we have a set of unique numbers
+
+    assert serialNumbers.size() == 50
   }
 }
