@@ -22,6 +22,7 @@ apply plugin: 'spring-boot'
 apply plugin: 'io.spring.dependency-management'
 apply plugin: 'checkstyle'
 apply plugin: 'idea'
+apply plugin: 'eclipse'
 
 repositories {
   jcenter()
@@ -104,7 +105,7 @@ bootRun {
   // specify NOT use gc opts by
   // `gradle bootRun -PnoGCOpts`
 
-  // run debug mode 
+  // run debug mode
   // `gradle bootRun -PdebugPort` # to use port number 5005 as default
   // or `gradle bootRun -PdebugPort=5006`
 
