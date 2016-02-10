@@ -1,1 +1,0 @@
-CREATE SEQUENCE sq_member_serial;

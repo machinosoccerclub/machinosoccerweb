@@ -73,6 +73,7 @@ dependencies {
   testCompile 'org.springframework.boot:spring-boot-starter-test'
   testCompile 'org.codehaus.groovy:groovy-test:2.4.5'
   testCompile 'org.spockframework:spock-core:1.0-groovy-2.4'
+  testCompile 'org.spockframework:spock-spring'
 }
 
 compileJava {
@@ -109,7 +110,7 @@ bootRun {
   // `gradle bootRun -PdebugPort` # to use port number 5005 as default
   // or `gradle bootRun -PdebugPort=5006`
 
-  def profileName = project.hasProperty('activeProfile') ? project.activeProfile : 'development'
+  def profileName = project.hasProperty('activeProfile') ? project.activeProfile : 'development,h2Debug'
   def appOpts = ["-Dspring.profiles.active=$profileName"]
   def stdOpts = ['-Dfile.encoding=UTF8', '-Xmx384m', '-Xss512k']
   def gcOpts =  project.hasProperty('noGCOpts') ? [] :

@@ -1,9 +1,8 @@
 package machinosoccerweb.members.repositories;
 
+import java.time.LocalDate;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
 import machinosoccerweb.infra.TempCollectionRepository;
@@ -39,7 +38,7 @@ public class MemberRepository extends TempCollectionRepository<Member, String> {
     member.setGivenNameKana("はなこ");
     member.setGender(Gender.Female);
     member.setGrade(Grade.Elem1);
-    member.setJoinedAt(new Date());
+    member.setJoinedAt(LocalDate.now());
     member.setFamilyId(Long.valueOf("user".hashCode()));
 
     MemberPhoto photo = new MemberPhoto("1234567", "https://www.google.co.jp/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png", "", "", "");

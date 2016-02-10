@@ -1,4 +1,5 @@
 package machinosoccerweb.members.repositories
+
 import machinosoccerweb.Application
 import machinosoccerweb.jpa.JpaMemberPhotoRepository
 import machinosoccerweb.jpa.JpaMemberRepository
@@ -13,12 +14,13 @@ import org.springframework.boot.test.SpringApplicationConfiguration
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner
 
+import java.time.LocalDate
 import java.util.stream.Collectors
 
 @RunWith(SpringJUnit4ClassRunner)
 @SpringApplicationConfiguration(Application)
 @EnableConfigurationProperties
-@ActiveProfiles("unitTest")
+@ActiveProfiles(profiles = ["development", "unitTest"], inheritProfiles = true)
 class MemberRepositoryTest {
   @Autowired
   private JpaMemberRepository memberRepository
@@ -42,7 +44,7 @@ class MemberRepositoryTest {
     (0..<3).each { i ->
       def member = new Member(memberNo: '123456' + i, givenName: 'g1', familyName: 'f1',
           givenNameKana: 'g1kana', familyNameKana: 'f1kana', gender: Gender.Female,
-          grade: Grade.Elem1, joinedAt: new Date(), familyId: familyId)
+          grade: Grade.Elem1, joinedAt: LocalDate.now(), familyId: familyId)
 
       memberRepository.save(member)
     }
