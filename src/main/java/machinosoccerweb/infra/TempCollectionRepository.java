@@ -125,8 +125,8 @@ public abstract class TempCollectionRepository<T, ID extends Serializable> {
         @SuppressWarnings("unchecked")
         R ret = (R) field.get(entity);
         return Optional.ofNullable(ret);
-      } catch (IllegalAccessException e) {
-        throw new RuntimeException(e);
+      } catch (IllegalAccessException illegalAccess) {
+        throw new RuntimeException(illegalAccess);
       }
     }
 
@@ -137,8 +137,8 @@ public abstract class TempCollectionRepository<T, ID extends Serializable> {
     public void set(T entity, R value) {
       try {
         field.set(entity, value);
-      } catch (IllegalAccessException e) {
-        throw new RuntimeException(e);
+      } catch (IllegalAccessException illegalAccess) {
+        throw new RuntimeException(illegalAccess);
       }
     }
   }

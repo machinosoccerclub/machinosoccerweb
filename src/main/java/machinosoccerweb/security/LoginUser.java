@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
-import lombok.ToString;
 import machinosoccerweb.login.models.LoginLinkRequest;
 import machinosoccerweb.members.models.Email;
 import org.springframework.security.core.GrantedAuthority;

@@ -2,7 +2,6 @@ package machinosoccerweb.members.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Value;
 
 @AllArgsConstructor
 @Getter

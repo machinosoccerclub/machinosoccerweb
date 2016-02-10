@@ -93,8 +93,8 @@ public class RequestLoginLinkController {
           URLEncoder.encode(loginLinkRequest.getEncodedDateAddress(), "utf-8"),
           loginLinkRequest.getKey());
       return request.getRequestURL().toString().replace("/requestLoginLink", path);
-    } catch (UnsupportedEncodingException e) {
-      throw new RuntimeException(e);
+    } catch (UnsupportedEncodingException unsupportedEncoding) {
+      throw new RuntimeException(unsupportedEncoding);
     }
   }
 }

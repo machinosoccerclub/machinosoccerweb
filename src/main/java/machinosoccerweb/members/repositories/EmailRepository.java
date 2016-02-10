@@ -1,8 +1,6 @@
 package machinosoccerweb.members.repositories;
 
 import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
 
 import machinosoccerweb.infra.TempCollectionRepository;
 import machinosoccerweb.members.models.Email;

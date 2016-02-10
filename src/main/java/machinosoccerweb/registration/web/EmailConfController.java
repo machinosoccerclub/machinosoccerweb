@@ -72,8 +72,9 @@ public class EmailConfController {
       Long appliedTimeMillis = Long.parseLong(appliedAtHex, 16);
       Date appliedAt = new Date(appliedTimeMillis);
       return Optional.of(appliedAt);
-    } catch (RuntimeException e) {
-      logger.error("[{}]: exception occurred on parsing [{}]", e, appliedAtHex);
+    } catch (NumberFormatException invalidNumberFormat) {
+      logger.error("[{}]: exception occurred on parsing [{}]",
+          invalidNumberFormat, appliedAtHex);
       return Optional.empty();
     }
   }

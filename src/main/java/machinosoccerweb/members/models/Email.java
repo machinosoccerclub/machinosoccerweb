@@ -2,7 +2,6 @@ package machinosoccerweb.members.models;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.StringTokenizer;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
@@ -10,7 +9,6 @@ import javax.persistence.Transient;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.springframework.security.core.GrantedAuthority;
 
 @Entity
 @Data

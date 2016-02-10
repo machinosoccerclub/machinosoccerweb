@@ -59,7 +59,7 @@ dependencies {
 
   provided 'org.projectlombok:lombok:1.16.6'
 
-  checkstyle 'com.puppycrawl.tools:checkstyle:6.10.1'
+  checkstyle 'com.puppycrawl.tools:checkstyle:6.15'
   // when modify the version of library, consider to update
   // `config/checkstyle/checkstyle.xml` with the latest. see below.
   // https://github.com/checkstyle/checkstyle/blob/master/src/main/resources/google_checks.xml

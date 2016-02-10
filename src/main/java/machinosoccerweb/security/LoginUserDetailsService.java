@@ -1,14 +1,11 @@
 package machinosoccerweb.security;
 
-import java.util.Arrays;
 import java.util.Optional;
 
 import lombok.extern.slf4j.Slf4j;
-import machinosoccerweb.login.models.LoginLinkRequest;
 import machinosoccerweb.login.repositories.LoginLinkRequestRepository;
 import machinosoccerweb.login.services.LoginLinkService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

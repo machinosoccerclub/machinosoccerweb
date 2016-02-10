@@ -20,8 +20,8 @@ public class HmacUtils {
       Key key = new SecretKeySpec(phrase.getBytes(), ALGORITHM_NAME);
       mac.init(key);
       return mac;
-    } catch (GeneralSecurityException e) {
-      throw new IllegalStateException(e);
+    } catch (GeneralSecurityException securityException) {
+      throw new IllegalStateException(securityException);
     }
   }
 
