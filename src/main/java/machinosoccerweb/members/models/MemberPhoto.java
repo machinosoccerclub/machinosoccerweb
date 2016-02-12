@@ -5,23 +5,22 @@ import javax.persistence.Id;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Entity
 @Data
+@EqualsAndHashCode(callSuper = false)
 @AllArgsConstructor
-public class MemberPhoto {
-  public MemberPhoto() {
-    // this is for JPA
+public class MemberPhoto extends GooglePicasaPhotoEntry {
+  public MemberPhoto() { // this is for JPA
+    super();
+  }
+
+  public MemberPhoto(String memberNo, GooglePicasaPhotoEntry picasaPhotoEntry) {
+    super(picasaPhotoEntry);
+    this.memberNo = memberNo;
   }
 
   @Id
   private String memberNo;
-
-  private String photoUrl;
-
-  private String thumbnailUrl;
-
-  private String picasaPhotoEntryId;
-
-  private String picasaPhotoEntryEditURI;
 }

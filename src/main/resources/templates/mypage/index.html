@@ -39,10 +39,9 @@
              alt="member's photo" class="img-thumbnail">
       </td>
       <td>
-        <button class="btn btn-default">
+        <a class="btn btn-default" th:href="@{|/mypage/member/${member.memberNo}/photo|}">
           <span class="glyphicon glyphicon-camera" aria-hidden="true"></span>
-        </button>
-
+        </a>
       </td>
     </tr>
 

@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import machinosoccerweb.infra.TempCollectionRepository;
 import machinosoccerweb.members.models.Gender;
+import machinosoccerweb.members.models.GooglePicasaPhotoEntry;
 import machinosoccerweb.members.models.Grade;
 import machinosoccerweb.members.models.Member;
 import machinosoccerweb.members.models.MemberPhoto;
@@ -41,7 +42,10 @@ public class MemberRepository extends TempCollectionRepository<Member, String> {
     member.setJoinedAt(LocalDate.now());
     member.setFamilyId(Long.valueOf("user".hashCode()));
 
-    MemberPhoto photo = new MemberPhoto("1234567", "https://www.google.co.jp/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png", "", "", "");
+    MemberPhoto photo = new MemberPhoto("1234567",
+        new GooglePicasaPhotoEntry(
+            "https://www.google.co.jp/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png",
+            "", "", ""));
     member.setPhoto(photo);
 
     return Arrays.asList(member);

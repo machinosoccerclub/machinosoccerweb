@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title th:text="#{view.title('顔写真登録')}"></title>
+
+  <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+  <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="../../static/css/machinosoccerweb.css"
+        th:href="@{/css/machinosoccerweb.css}" media="all">
+</head>
+<body>
+  <div class="container">
+    <div class="main" th:with="isNew=(${member.photo} == null)">
+      <h2>顔写真アップロード</h2>
+
+      <form method="POST" id="uploadForm" enctype="multipart/form-data"
+        th:action="@{|/mypage/member/*{memberNo}/photo|}"
+        th:novalidate="${@environment.acceptsProfiles('development')}">
+        <fieldset th:object="${member}">
+
+        <legend>顔写真の登録</legend>
+          <div th:if="${isNew}" id="photo-navigation-guide">
+            活動中はお子様の名前で呼んであげたいと思っています。
+            指導時にお子様の顔と名前が一致するようあらかじめ顔写真をご登録ください。
+          </div>
+          <dif th:unless="${isNew}" id="photo-update-guide">
+            写真を変更できます
+          </dif>
+          <div>
+            <div th:text="*{givenName} + ' さんの写真'"></div>
+          </div>
+          <div>
+            <img th:with="srcUrl=(${member.photo} ? ${member.photo.photoUrl} : '/images/nophoto.png')"
+                 th:src="@{|${srcUrl}|}" src="../../static/images/nophoto.png"
+                 src="/images/nophoto.png"
+                 alt="member's photo" class="img center">
+            <span th:if="${isNew}" class="bg-danger text-danger">未登録です</span>
+          </div>
+          <div class="form-group required">
+            <label class="control-label" for="photo">写真を選択して登録ください</label>
+            <input type="file" id="photo" name="photo"
+                   accept="image/gif, image/png, image/jpg, image/jpeg"
+                   required />
+            <p th:if="${error}" class="bg-danger text-danger">
+              アップロードできませんでした。
+            </p>
+            <p th:if="${error}" class="bg-danger text-info">
+              写真のファイル形式は<code>gif, png, jpg(jpeg)</code>です。
+              写真のサイズが大きすぎると時間がかかったりエラーになることがありますので、
+              その場合は時間をおいてやり直すか、トリミングするなどしてサイズを小さくしてやり直してください。
+            </p>
+            <span class="help-block" id="photo-help">
+              <ul>
+                <li>学年や性別で区別がつくようであれば、ご家族や他の方と一緒の写真でも構いません</li>
+                <li>顔が分かる写真であればアップでなくても構いません</li>
+                <li>後から写真を変更することもできます</li>
+              </ul>
+            </span>
+          </div>
+          <div class="form-group">
+            <input type="submit" id="updateSubmit" class="btn btn-success btn-block"
+                   value="登録・変更" />
+            <span id="helpBlock" class="help-block">プライバシーポリシーの詳細についてはこちらの
+              <a href="http://goo.gl/6Gbiyr" target="_blank">リンク</a>をご確認ください</span>
+            <a th:href="@{|/mypage|}" class="btn btn-default">登録・変更せずに戻る</a>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

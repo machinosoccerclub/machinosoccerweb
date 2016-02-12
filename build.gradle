@@ -57,6 +57,10 @@ dependencies {
   compile 'org.springframework.boot:spring-boot-starter-security'
   compile 'org.springframework.boot:spring-boot-starter-logging'
 
+  compile 'com.google.gdata:core:1.47.1'
+  compile 'com.squareup.retrofit:retrofit:1.9.0'
+  compile 'com.squareup.retrofit:converter-simplexml:1.9.0'
+
   provided 'org.projectlombok:lombok:1.16.6'
 
   checkstyle 'com.puppycrawl.tools:checkstyle:6.15'

@@ -60,7 +60,8 @@ class MemberRepositoryTest {
 
   @Test
   public void savePhotoByPhotoRepository() {
-    def memberPhoto = new MemberPhoto('1234560', 'aaa', 'nnn', 'b', 'm')
+    def memberPhoto = new MemberPhoto('1234560',
+        new GooglePicasaPhotoEntry('aaa', 'nnn', 'b', 'm'))
     memberPhotoRepository.saveAndFlush(memberPhoto)
 
     def member = memberRepository.findOne('1234560')
@@ -71,7 +72,8 @@ class MemberRepositoryTest {
   @Test
   public void savePhotoByProperty() {
     String memberNo = '1234561'
-    def memberPhoto = new MemberPhoto(memberNo, 'aaa', 'nnn', 'b', 'm')
+    def memberPhoto = new MemberPhoto(memberNo,
+        new GooglePicasaPhotoEntry('aaa', 'nnn', 'b', 'm'))
 
     def member = memberRepository.findOne(memberNo)
     assert member.photo == null
