@@ -56,7 +56,7 @@ public class GooglePicasa {
     }
   }
 
-  public Optional<String> normalizeMediaType(String contentType) {
+  public static Optional<String> normalizeMediaType(String contentType) {
     if (contentType == null) {
       return Optional.empty();
     }

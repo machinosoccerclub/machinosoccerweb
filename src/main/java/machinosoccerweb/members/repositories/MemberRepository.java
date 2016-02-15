@@ -25,6 +25,10 @@ public class MemberRepository extends TempCollectionRepository<Member, String> {
         .collect(Collectors.toList());
   }
 
+  public Long getNextSerialNumber() {
+    return incrementAndGetId();
+  }
+
   @Override
   protected String convert(long newId) {
     return String.valueOf(newId);

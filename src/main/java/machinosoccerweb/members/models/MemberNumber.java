@@ -17,7 +17,7 @@ public class MemberNumber {
     this.memberNumber = memberNumber;
   }
 
-  public static MemberNumber from(LocalDate joinedAt, int serial) {
+  public static MemberNumber from(LocalDate joinedAt, long serial) {
     String number = String.format("%d%d%03d", Area, joinedAt.getYear() - 2000, serial);
     assert (number.length() == 6);
 

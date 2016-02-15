@@ -34,5 +34,8 @@ public class Member {
 
   private LocalDate joinedAt;
 
+  @Enumerated
+  private Course course;
+
   private Long familyId;
 }

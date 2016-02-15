@@ -27,6 +27,8 @@ create table member (
 
   joined_at date not null,
 
+  course int not null,
+
   family_id bigint not null
 );
 

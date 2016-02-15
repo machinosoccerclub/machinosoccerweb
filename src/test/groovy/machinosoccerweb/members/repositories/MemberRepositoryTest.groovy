@@ -44,7 +44,7 @@ class MemberRepositoryTest {
     (0..<3).each { i ->
       def member = new Member(memberNo: '123456' + i, givenName: 'g1', familyName: 'f1',
           givenNameKana: 'g1kana', familyNameKana: 'f1kana', gender: Gender.Female,
-          grade: Grade.Elem1, joinedAt: LocalDate.now(), familyId: familyId)
+          grade: Grade.Elem1, joinedAt: LocalDate.now(), course: Course.Elem1, familyId: familyId)
 
       memberRepository.save(member)
     }

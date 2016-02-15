@@ -66,14 +66,14 @@ public class MemberPhotoService {
     Supplier<String> mediaTypeFromFileExt = () ->
         createMediaTypeFromFilename(originalFilename, uploadedContentType);
 
-    return googlePicasa.normalizeMediaType(uploadedContentType)
+    return GooglePicasa.normalizeMediaType(uploadedContentType)
         .orElseGet(mediaTypeFromFileExt);
   }
 
   private String createMediaTypeFromFilename(String originalFilename, String uploadedContentType) {
     Function<String, String> warnLog = (String mediaTypeToUse) -> {
       log.warn("we are attempting upload the file to picasa:`{}` using mediaType: `{}`," +
-              "use got from browser: `{}`",
+              " because we got unsupported content type from browser: `{}`",
           originalFilename, mediaTypeToUse, uploadedContentType);
       return mediaTypeToUse;
     };
