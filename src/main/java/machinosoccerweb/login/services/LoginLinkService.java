@@ -11,8 +11,8 @@ import lombok.extern.slf4j.Slf4j;
 import machinosoccerweb.infra.HmacUtils;
 import machinosoccerweb.login.models.LoginLinkRequest;
 import machinosoccerweb.login.repositories.LoginLinkRequestRepository;
-import machinosoccerweb.members.models.Email;
-import machinosoccerweb.members.repositories.EmailRepository;
+import machinosoccerweb.members.models.Account;
+import machinosoccerweb.members.repositories.AccountRepository;
 import machinosoccerweb.security.LoginUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,7 +29,7 @@ public class LoginLinkService {
 
   private final LoginLinkRequestRepository loginLinkRequestRepository;
 
-  private final EmailRepository emailRepository;
+  private final AccountRepository accountRepository;
 
   @Value("${machinosoccerweb.hmackey}")
   private String confPhrase;
@@ -38,11 +38,11 @@ public class LoginLinkService {
   public LoginLinkService(HmacUtils hmacUtils,
                           Clock clock,
                           LoginLinkRequestRepository loginLinkRequestRepository,
-                          EmailRepository emailRepository) {
+                          AccountRepository accountRepository) {
     this.hmacUtils = hmacUtils;
     this.clock = clock;
     this.loginLinkRequestRepository = loginLinkRequestRepository;
-    this.emailRepository = emailRepository;
+    this.accountRepository = accountRepository;
   }
 
   public LoginLinkRequest createLoginLinkRequest(String emailAddress) {
@@ -73,7 +73,7 @@ public class LoginLinkService {
 
     boolean nonExpired = !LocalDate.now(clock).isAfter(request.expiryDate());
 
-    Email email = emailRepository.findOne(request.getEmailAddress());
-    return Optional.of(new LoginUser(request, email, nonExpired));
+    Account account = accountRepository.findOne(request.getEmailAddress());
+    return Optional.of(new LoginUser(request, account, nonExpired));
   }
 }

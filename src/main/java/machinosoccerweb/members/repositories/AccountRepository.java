@@ -3,18 +3,18 @@ package machinosoccerweb.members.repositories;
 import java.util.Arrays;
 
 import machinosoccerweb.infra.TempCollectionRepository;
-import machinosoccerweb.members.models.Email;
+import machinosoccerweb.members.models.Account;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class EmailRepository extends TempCollectionRepository<Email, String> {
+public class AccountRepository extends TempCollectionRepository<Account, String> {
 
-  public EmailRepository() {
+  public AccountRepository() {
     super(Arrays.asList(
-        new Email("user@example.com",
+        new Account("user@example.com",
             true, true,
             "user".hashCode(),
-            Email.Status.AddressConfirmed,
+            Account.Status.AddressConfirmed,
             "user")));
   }
 

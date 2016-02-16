@@ -4,9 +4,9 @@ import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import machinosoccerweb.infra.validator.Katakana;
 import machinosoccerweb.infra.validator.TelephoneNumber;
-import machinosoccerweb.members.models.Email;
+import machinosoccerweb.members.models.Account;
 import machinosoccerweb.members.models.Parent;
-import machinosoccerweb.members.repositories.EmailRepository;
+import machinosoccerweb.members.repositories.AccountRepository;
 import machinosoccerweb.members.repositories.ParentRepository;
 import machinosoccerweb.security.LoginUser;
 import org.hibernate.validator.constraints.NotBlank;
@@ -26,12 +26,12 @@ public class ContactController {
 
   private final ParentRepository parentRepository;
 
-  private final EmailRepository emailRepository;
+  private final AccountRepository accountRepository;
 
   @Autowired
-  public ContactController(ParentRepository parentRepository, EmailRepository emailRepository) {
+  public ContactController(ParentRepository parentRepository, AccountRepository accountRepository) {
     this.parentRepository = parentRepository;
-    this.emailRepository = emailRepository;
+    this.accountRepository = accountRepository;
   }
 
   @RequestMapping(value = "/mypage/contact", method = RequestMethod.GET)
@@ -69,9 +69,9 @@ public class ContactController {
     if (loginUser.isParentRegistered()) {
       return "redirect:/mypage";
     } else {
-      Email email = new Email(loginUser.getEmailAddress(), true, true,
-          saved.getFamilyId(), Email.Status.AddressConfirmed, "user");
-      emailRepository.save(email);
+      Account account = new Account(loginUser.getEmailAddress(), true, true,
+          saved.getFamilyId(), Account.Status.AddressConfirmed, "user");
+      accountRepository.save(account);
 
       // todo: need to update the authenticated principal
       return "redirect:/emailConf?a=" + loginUser.getUsername() + "&k=" + loginUser.getPassword();

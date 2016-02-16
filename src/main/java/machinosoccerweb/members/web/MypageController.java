@@ -3,10 +3,10 @@ package machinosoccerweb.members.web;
 import java.util.List;
 
 import lombok.extern.slf4j.Slf4j;
-import machinosoccerweb.members.models.Email;
+import machinosoccerweb.members.models.Account;
 import machinosoccerweb.members.models.Member;
 import machinosoccerweb.members.models.Parent;
-import machinosoccerweb.members.repositories.EmailRepository;
+import machinosoccerweb.members.repositories.AccountRepository;
 import machinosoccerweb.members.repositories.MemberRepository;
 import machinosoccerweb.members.repositories.ParentRepository;
 import machinosoccerweb.security.LoginUser;
@@ -23,15 +23,15 @@ public class MypageController {
 
   private final MemberRepository memberRepository;
 
-  private final EmailRepository emailRepository;
+  private final AccountRepository accountRepository;
 
   @Autowired
   public MypageController(ParentRepository parentRepository,
                           MemberRepository memberRepository,
-                          EmailRepository emailRepository) {
+                          AccountRepository accountRepository) {
     this.parentRepository = parentRepository;
     this.memberRepository = memberRepository;
-    this.emailRepository = emailRepository;
+    this.accountRepository = accountRepository;
   }
 
   @RequestMapping("/mypage")
@@ -48,8 +48,8 @@ public class MypageController {
     List<Member> members = memberRepository.findByFamilyId(familyId);
     model.addAttribute("members", members);
 
-    List<Email> emails = emailRepository.findByFamilyId(familyId);
-    model.addAttribute("contacts", emails);
+    List<Account> accounts = accountRepository.findByFamilyId(familyId);
+    model.addAttribute("contacts", accounts);
 
     return "mypage/index";
   }

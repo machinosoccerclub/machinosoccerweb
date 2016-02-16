@@ -5,7 +5,7 @@ create table login_link_request (
     issued_date date not null
 );
 
-create table email (
+create table account (
   email_address varchar primary key,
   receive_activity_schedule boolean not null,
   receive_apply_notification boolean not null,

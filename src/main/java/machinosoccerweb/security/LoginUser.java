@@ -5,24 +5,24 @@ import java.util.Collection;
 import java.util.stream.Collectors;
 
 import machinosoccerweb.login.models.LoginLinkRequest;
-import machinosoccerweb.members.models.Email;
+import machinosoccerweb.members.models.Account;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 public class LoginUser implements UserDetails {
   private final LoginLinkRequest loginLinkRequest;
-  private final Email email;
+  private final Account account;
   private final Collection<? extends GrantedAuthority> authorities;
   private final boolean isAccountNonExpired;
 
   public LoginUser(LoginLinkRequest loginLinkRequest,
-                   Email email,
+                   Account account,
                    boolean isAccountNonExpired) {
     this.loginLinkRequest = loginLinkRequest;
-    this.email = email;
-    this.authorities = email != null
-        ? email.getAuthorities().stream()
+    this.account = account;
+    this.authorities = account != null
+        ? account.getAuthorities().stream()
             .map(SimpleGrantedAuthority::new)
             .collect(Collectors.toList()) :
         Arrays.asList(new SimpleGrantedAuthority("user"));
@@ -65,7 +65,7 @@ public class LoginUser implements UserDetails {
   }
 
   public Long getFamilyId() {
-    return email != null ? email.getFamilyId() : null;
+    return account != null ? account.getFamilyId() : null;
   }
 
   public boolean isParentRegistered() {

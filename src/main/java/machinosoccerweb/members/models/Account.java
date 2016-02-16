@@ -13,7 +13,7 @@ import lombok.Data;
 @Entity
 @Data
 @AllArgsConstructor
-public class Email {
+public class Account {
   @Id
   private String emailAddress;
 
