@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface EmailConfRepository extends JpaRepository<EmailConf, Long> {
+public interface EmailConfRepository extends JpaRepository<EmailConf, Integer> {
 }

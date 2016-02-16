@@ -23,7 +23,7 @@ public class EmailConf {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+  private Integer id;
 
   private String email;
 
