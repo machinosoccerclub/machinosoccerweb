@@ -1,10 +1,15 @@
 package machinosoccerweb.members.web;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
+import java.util.Optional;
 import javax.persistence.Enumerated;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import machinosoccerweb.infra.validator.Katakana;
@@ -45,7 +50,7 @@ public class MemberController {
 
     if (!loginUser.isParentRegistered()) {
       // illegal window trantision
-      return "redirect:/contact";
+      return "redirect:/mypage/contact";
     }
 
     Parent parent = parentRepository.findOne(loginUser.getFamilyId());
@@ -58,9 +63,6 @@ public class MemberController {
   @RequestMapping(value = "/mypage/member/new", method = RequestMethod.POST)
   public String saveMember(@AuthenticationPrincipal LoginUser loginUser,
       @Validated @ModelAttribute("member") MemberForm memberForm, BindingResult result) {
-
-    // TODO: validate joinedAt if it is in range from 2013-05 to today, inclusive.
-    //
 
     if (result.hasErrors()) {
       log.debug("validation error:{}", result);
@@ -81,8 +83,6 @@ public class MemberController {
 
     private String memberNo;
 
-    private int userId;
-
     @NotBlank
     private String givenName;
     @NotBlank
@@ -102,9 +102,16 @@ public class MemberController {
     @Enumerated
     private Gender gender;
 
+    // todo: need validation between 2013-05 to current (inclusive)
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM")
-    private Date joinedAt;
+    private Date joinedAtMonth;
 
+    public LocalDate getJoinedAt() {
+      return Optional.ofNullable(joinedAtMonth)
+          .map(d -> LocalDateTime.ofInstant(d.toInstant(), ZoneId.systemDefault()))
+          .map(ldt -> ldt.toLocalDate())
+          .orElse(null);
+    }
   }
 }

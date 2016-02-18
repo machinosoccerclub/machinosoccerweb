@@ -10,7 +10,8 @@ h3,h4,h5{
   font-weight: 100;
 }
 
-header {
+header#banner {
+  color: #fff;
 	text-align: center;
   word-break: keep-all;
 	padding-top: 8px;

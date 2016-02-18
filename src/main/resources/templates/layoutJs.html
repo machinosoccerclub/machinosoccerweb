@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+  <title layout:title-pattern="$CONTENT_TITLE | $DECORATOR_TITLE" th:text="#{view.title}"></title>
+  <object th:include="fragments :: head" th:remove="tag" />
+</head>
+<body>
+
+  <div class="container" layout:fragment="content"></div>
+
+  <div th:replace="fragments :: footer"></div>
+
+  <div layout:fragment="scripts" th:remove="tag"></div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <div layout:fragment="additionalScripts" th:remove="tag"></div>
+</body>
+</html>

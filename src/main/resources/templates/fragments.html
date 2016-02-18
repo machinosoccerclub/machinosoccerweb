@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head th:fragment="head">
+  <meta charset="utf-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+  <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <link rel="stylesheet"
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="../static/css/machinosoccerweb.css"
+        th:href="@{/css/machinosoccerweb.css}" media="all">
+</head>
+<body>
+<!--<div th:fragment="menu">-->
+<!--<form th:action="@{/logout}" method="post">-->
+<!--<input type="submit" value="ログアウト" class="btn btn-default" />-->
+<!--</form>-->
+<!--</div>-->
+
+  <div layout:fragment="scripts" th:fragment="scripts">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  </div>
+
+  <footer layout:fragment="footer" th:fragment="footer">
+    <hr />
+    <center>
+      <div th:text="#{view.copyrights}"></div>
+    </center>
+    <div>
+      <ul class="list-inline">
+        <li>
+          <a href="mailto:machinosoccer2013@gmail.com">
+            <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+            メール
+          </a>
+        </li>
+        <li>
+          <a href="">
+            <img src="../static/images/asset.f.logo16x16.png"
+                 th:src="@{/images/asset.f.logo16x16.png}">
+            Facebookページ
+          </a>
+        </li>
+        <li class="pull-right">
+          <a class="btn btn-info btn-xs" href="/help" target="_blank"
+             th:with="path=${#httpServletRequest.requestURI}"
+             th:href="@{|/help?path=${path}|}">
+            お問い合わせ
+          </a>
+        </li>
+      </ul>
+    </div>
+  </footer>
+</body>
+</html>

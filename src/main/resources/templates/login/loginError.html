@@ -1,17 +1,13 @@
 <!DOCTYP html>
-<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<html lang="ja" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout">
 <head>
-  <meta charset="utf-8"/>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-
-  <title th:text="#{view.title('ログインできませんでした')}"></title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
-  <link rel="stylesheet" href="../static/css/machinosoccerweb.css"
-        th:href="@{/css/machinosoccerweb.css}" media="all">
+  <meta th:remove="all" charset="utf-8"/>
+  <title>ログインできませんでした</title>
 </head>
 <body>
+<div layout:fragment="content">
   <h2>ログインできませんでした</h2>
   <section>
     ログインリンクに誤りがあるか、有効期限が切れています。リンクを確認の上、アドレスバーに正しく入力してください。
@@ -20,5 +16,6 @@
   <section>
     <a href="/" th:href="@{/}" class="btn btn-success">ログインリンク取得画面へ</a>
   </section>
+</div>
 </body>
 </html>
