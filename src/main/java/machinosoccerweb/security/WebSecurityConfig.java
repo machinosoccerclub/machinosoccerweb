@@ -19,7 +19,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   private static final String ConfirmURL = "/emailConf";
 
   private static final String[] AccessPermittedPaths = {
-    "/", "/ping", ConfirmURL, "/css/**", "/images/**", "/favicon.ico", "/error",
+    "/", "/ping", ConfirmURL, "/css/**", "/images/**", "/favicon.ico", "/error", "/demo",
     // "/webjars/**",
     "/requestLoginLink", "/loginLinkSent"
   };

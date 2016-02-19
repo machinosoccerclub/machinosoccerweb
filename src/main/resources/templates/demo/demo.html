@@ -1,0 +1,49 @@
+<!DOCTYP html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout">
+<head>
+  <meta th:remove="all" charset="utf-8"/>
+  <title>デモ用ページです</title>
+</head>
+<body>
+<div layout:fragment="content">
+  <div th:if="${@environment.acceptsProfiles('demo')}">
+    <p class="text-info bg-warning">
+      このページはデモ用です。本番環境では表示されないように設定しています。
+    </p>
+    <p class="text-info bg-info">
+      本来、メールで受け取るログインリンクをスキップして、任意のメールアドレス(存在しなくてもOK)でログインできます。
+    </p>
+    <form th:action="@{/demo}" method="post">
+      <fieldset th:object="${demoForm}">
+        <div class="form-group required">
+          <label class="col-sm-2 control-label" for="email">ユーザアカウント（メールアドレス）</label>
+          <div class="col-sm-10">
+            <input id="email" type="email" name="email" class="form-control"
+                   th:field="*{email}"/>
+            <span th:if="${#fields.hasErrors('email')}"
+                  th:errors="*{email}" class="text-danger"></span>
+          </div>
+        </div>
+
+        <div class="form-group required">
+          <label class="col-sm-2 control-label" for="dataPopulation">ログイン後の初期データ</label>
+          <div class="col-sm-10">
+            <span class="help-block">ユーザアカウントが未登録の場合、テキトーなデータを用意します</span>
+            <input type="checkbox" id="dataPopulation" class="form-control" name="dataPopulation"
+                   th:field="*{dataPopulation}"/>
+            <span th:if="${#fields.hasErrors('dataPopulation')}"
+                  th:errors="*{dataPopulation}" class="text-danger"></span>
+          </div>
+        </div>
+
+        <div class="form-group col-sm-10">
+          <input type="submit" class="btn btn-success" value="ログインする"/>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+</div>
+</body>
+</html>
