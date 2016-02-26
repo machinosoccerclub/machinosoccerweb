@@ -17,12 +17,10 @@
       <p class="text-warning">TODO: 新規登録の場合の記載</p>
     </div>
   </section>
-  <section th:if="${@environment.acceptsProfiles('development')}">
+  <section th:if="${@environment.acceptsProfiles('demo')}">
     <div class="bg-danger">
-      <span>送信されるメール本文です。本番では表示されません</span>
-      <div th:text="${message}" class="well"></div>
-      <span>ログインリンクボタンです。本番では表示されません</span>
-      <a th:href="@{|${loginLink}|}" class="btn btn-danger">ログインリンク</a>
+      <span>送信メール一覧画面へのボタンです。本番では表示されません</span>
+      <a th:href="@{|/demo/messages|}" class="btn btn-danger">送信メール一覧画面</a>
     </div>
   </section>
 </div>

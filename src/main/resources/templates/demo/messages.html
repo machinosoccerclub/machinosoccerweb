@@ -1,0 +1,41 @@
+<!DOCTYP html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layout">
+<head>
+  <meta th:remove="all" charset="utf-8"/>
+  <title>デモ用：送信メール一覧</title>
+</head>
+<body>
+<div layout:fragment="content">
+  <div th:if="${@environment.acceptsProfiles('demo')}">
+    <p class="text-info bg-warning">
+      このページはデモ用です。本番環境ではページ自体が表示されないように設定しています。
+      デモ環境では送信メールを自ホストのSMTPサーバで受信します。以下はその一覧です。
+      （再起動すると消滅します）
+    </p>
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th>#</th>
+        <th>受信時刻</th>
+        <th>送信者</th>
+        <th>受信者</th>
+        <th>内容</th>
+        <th>保存</th>
+      </tr>
+      </thead>
+      <tbody th:each="message,msgStat : ${messages}">
+      <tr>
+        <td th:text="${msgStat.index + 1}">1</td>
+        <td th:text="${message.receivedAt}">タスク1</td>
+        <td th:text="${message.from}">タスク1</td>
+        <td th:text="${message.recipient}">タスク1</td>
+        <td><a th:href="@{|/demo/messages/${msgStat.index}|}" target="_blank">本文</a></td>
+        <td><a th:href="@{|/demo/messages/${msgStat.index}/download|}">DL</a></td>
+      </tr>
+    </table>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYP html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta th:remove="all" charset="utf-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+  <title th:text="#{view.title('メール')}"></title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+  <link rel="stylesheet" href="../static/css/machinosoccerweb.css"
+        th:href="@{/css/machinosoccerweb.css}" media="all">
+</head>
+<body>
+<div class="container">
+  <div th:object="${message}">
+    <dl>
+      <dt>Received At:</dt>
+      <dd th:text="*{receivedAt}"></dd>
+      <dt>From:</dt>
+      <dd th:text="*{from}"></dd>
+      <dt>recipient:</dt>
+      <dd th:text="*{recipient}"></dd>
+      <dt>本文</dt>
+      <dd>
+        <pre class="pre-scrollable" th:utext="*{content}">
+        あいうえお
+        かきくけこ
+        </pre>
+      </dd>
+      <dt>生データ</dt>
+      <dd>
+        <pre class="pre-scrollable" th:text="*{rawData}">
+        Subject: あああああ
+        To: ええええ
+        あいうえお
+        かきくけこ
+        </pre>
+      </dd>
+    </dl>
+  </div>
+</div>
+</html>
