@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 import javax.servlet.http.HttpServletRequest;
 
 import lombok.extern.slf4j.Slf4j;
+import machinosoccerweb.infra.mail.Mailer;
 import machinosoccerweb.login.models.LoginLinkRequest;
 import machinosoccerweb.login.services.LoginLinkService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,7 @@ public class RequestLoginLinkController {
   private final HttpServletRequest request;
 
   private final LoginLinkService loginLinkService;
+  private final Mailer mailer;
 
   private final Environment environment;
 
@@ -37,37 +39,41 @@ public class RequestLoginLinkController {
   @Autowired
   public RequestLoginLinkController(HttpServletRequest request,
                                     LoginLinkService loginLinkService,
+                                    Mailer mailer,
                                     Environment environment,
                                     MessageSource messageSource) {
     this.request = request;
     this.loginLinkService = loginLinkService;
+    this.mailer = mailer;
     this.environment = environment;
     this.messageSource = messageSource;
   }
 
   @RequestMapping(value = "/requestLoginLink", method = RequestMethod.POST)
-  public String sendLoginLink(@RequestParam("email") String email, RedirectAttributes attr)
+  public String sendLoginLink(@RequestParam("email") String emailAddress, RedirectAttributes attr)
       throws GeneralSecurityException {
+
     // validate email address format
-    if (!pattern.matcher(email).matches()) {
-      attr.addFlashAttribute("email", email);
+    if (!pattern.matcher(emailAddress).matches()) {
+      attr.addFlashAttribute("email", emailAddress);
       attr.addFlashAttribute("error", "invalidEmailAddressFormat");
       return "redirect:/";
     }
 
     //todo: check if email is registered
 
-    LoginLinkRequest loginLinkRequest = loginLinkService.createLoginLinkRequest(email);
+    LoginLinkRequest loginLinkRequest = loginLinkService.createLoginLinkRequest(emailAddress);
     loginLinkService.save(loginLinkRequest);
 
     String loginLink = createLoginLink(loginLinkRequest);
 
-    Object[] params = {loginLink, loginLinkRequest.expiryDate(), "xxxxxxsender@oreore.com"};
+    Object[] params = {loginLink, loginLinkRequest.expiryDate(), mailer.getFromAddress()};
+    String subject = messageSource.getMessage("loginLinkSubject", null, Locale.getDefault());
     String message = messageSource.getMessage("loginLinkEmail", params, Locale.getDefault());
-    //todo: send an email contains the required login url.
+    mailer.send(emailAddress, subject, message);
 
 
-    attr.addFlashAttribute("email", email);
+    attr.addFlashAttribute("email", emailAddress);
 
     if (environment.acceptsProfiles("development")) {
       attr.addFlashAttribute("message", message);
