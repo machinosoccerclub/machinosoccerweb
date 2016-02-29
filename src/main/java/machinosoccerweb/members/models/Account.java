@@ -14,6 +14,10 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class Account {
+  public Account() {
+    // for JPA
+  }
+
   @Id
   private String emailAddress;
 

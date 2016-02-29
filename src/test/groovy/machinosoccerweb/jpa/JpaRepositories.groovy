@@ -1,6 +1,7 @@
 package machinosoccerweb.jpa
 
 import machinosoccerweb.login.models.LoginLinkRequest
+import machinosoccerweb.members.models.Account
 import machinosoccerweb.members.models.Member
 import machinosoccerweb.members.models.MemberPhoto
 import machinosoccerweb.members.models.Parent
@@ -22,6 +23,9 @@ public interface JpaMemberRepository extends JpaRepository<Member, String> {
 
 @Repository
 public interface JpaParentRepository extends JpaRepository<Parent, Long> {}
+
+@Repository
+public interface JpaAccountRepository extends JpaRepository<Account, String> {}
 
 @Repository
 public interface JpaMemberPhotoRepository extends JpaRepository<MemberPhoto, String> {}

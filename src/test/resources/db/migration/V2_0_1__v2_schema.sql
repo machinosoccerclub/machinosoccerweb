@@ -5,6 +5,18 @@ create table login_link_request (
     issued_date date not null
 );
 
+create table parent (
+  family_id bigserial primary key,
+
+  given_name varchar not null,
+  family_name varchar not null,
+  given_name_kana varchar not null,
+  family_name_kana varchar not null,
+
+  phone_number1 varchar not null,
+  phone_number2 varchar
+);
+
 create table account (
   email_address varchar primary key,
   receive_activity_schedule boolean not null,
@@ -13,7 +25,7 @@ create table account (
   status int not null,
   roles varchar not null,
 
-  family_id bigint not null
+  family_id bigint references parent(family_id) on delete cascade
 );
 
 create table member (
@@ -29,7 +41,7 @@ create table member (
 
   course int not null,
 
-  family_id bigint not null
+  family_id bigint references parent(family_id) on delete cascade
 );
 
 create table member_photo (
@@ -37,19 +49,8 @@ create table member_photo (
   photo_url varchar not null,
   thumbnail_url varchar not null,
   picasa_photo_entry_id varchar not null,
-  picasa_photo_entry_edituri varchar not null
-);
-
-create table parent (
-  family_id bigserial primary key,
-
-  given_name varchar not null,
-  family_name varchar not null,
-  given_name_kana varchar not null,
-  family_name_kana varchar not null,
-
-  phone_number1 varchar not null,
-  phone_number2 varchar
+  picasa_photo_entry_edituri varchar not null,
+  foreign key (member_no) references member(member_no) on delete cascade
 );
 
 CREATE SEQUENCE sq_member_serial;

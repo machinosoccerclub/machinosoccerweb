@@ -2,6 +2,7 @@ package machinosoccerweb.infra.jpa;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.Optional;
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 
@@ -9,11 +10,15 @@ import javax.persistence.Converter;
 public class LocalDateConverter implements AttributeConverter<LocalDate, Date> {
   @Override
   public Date convertToDatabaseColumn(LocalDate attribute) {
-    return Date.valueOf(attribute);
+    return Optional.ofNullable(attribute)
+        .map(a -> Date.valueOf(a))
+        .orElse(null);
   }
 
   @Override
   public LocalDate convertToEntityAttribute(Date dbData) {
-    return dbData.toLocalDate();
+    return Optional.ofNullable(dbData)
+        .map(d -> d.toLocalDate())
+        .orElse(null);
   }
 }
