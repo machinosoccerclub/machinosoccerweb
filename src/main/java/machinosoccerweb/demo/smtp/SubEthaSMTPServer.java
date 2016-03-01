@@ -39,9 +39,6 @@ public class SubEthaSMTPServer implements InitializingBean, DisposableBean {
   public void start() {
     log.debug("starting the SMTP server");
 
-    if(false) {
-      throw new RuntimeException("you called me, thank you");
-    }
     smtpServer = new SMTPServer(adapter);
     smtpServer.setAuthenticationHandlerFactory(createAuthenticateHandler());
     smtpServer.setHostName(host);
@@ -67,7 +64,9 @@ public class SubEthaSMTPServer implements InitializingBean, DisposableBean {
   }
 
   private AuthenticationHandlerFactory createAuthenticateHandler() {
-    UsernamePasswordValidator auth = (user, password) -> {};
+    UsernamePasswordValidator auth = (user, password) -> {
+      // no-op
+    };
     return new EasyAuthenticationHandlerFactory(auth);
   }
 }

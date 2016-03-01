@@ -1,7 +1,6 @@
 package machinosoccerweb.demo.smtp;
 
 import java.io.IOException;
-import java.io.OutputStream;
 import java.io.Writer;
 import javax.servlet.http.HttpServletResponse;
 
@@ -32,7 +31,7 @@ public class SubEthaMessageController {
   public void download(@PathVariable("index") int index, HttpServletResponse response)
       throws IOException {
     response.setContentType("message/rfc822;charset=utf-8");
-    response.setHeader("Content-Disposition", "attachment; filename=email"+index+".eml");
+    response.setHeader("Content-Disposition", "attachment; filename=email" + index + ".eml");
     try (Writer writer = response.getWriter()) {
       writer.write(subEthaMessageCollection.getMessage(index).getContent());
     }

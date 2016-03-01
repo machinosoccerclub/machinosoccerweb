@@ -74,11 +74,11 @@ public class SubEthaMessageCollection {
         //String pattern = "(.*://[^<>[:space:]]+[[:alnum:]/])";
         String pattern = "<(.*)>";
         String linkEnabledContent =
-          content.replaceAll(pattern, "<a href=\"$1\" target=\"_blank\">$1</a>");
+            content.replaceAll(pattern, "<a href=\"$1\" target=\"_blank\">$1</a>");
 
         StringBuilder rawData = new StringBuilder();
         Enumeration headerLines = message.getAllHeaderLines();
-        while(headerLines.hasMoreElements()) {
+        while (headerLines.hasMoreElements()) {
           rawData.append(headerLines.nextElement().toString()).append('\n');
         }
         try (InputStream rawStream = message.getRawInputStream()) {
@@ -89,8 +89,8 @@ public class SubEthaMessageCollection {
                   from, recipient, linkEnabledContent, rawData.toString()));
         }
 
-      } catch (MessagingException e) {
-        throw new RuntimeException(e);
+      } catch (MessagingException exception) {
+        throw new RuntimeException(exception);
       }
 
     }

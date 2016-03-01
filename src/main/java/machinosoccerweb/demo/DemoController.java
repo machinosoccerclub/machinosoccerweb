@@ -118,10 +118,10 @@ public class DemoController {
   }
 
   private <T> T naming(T person) {
-    DemoFamilyName fName = random(fNames);
-    DemoGivenName gName = random(gNames);
-    BeanUtils.copyProperties(fName, person);
-    BeanUtils.copyProperties(gName, person);
+    DemoFamilyName familyName = random(familyNames);
+    DemoGivenName givenName = random(givenNames);
+    BeanUtils.copyProperties(familyName, person);
+    BeanUtils.copyProperties(givenName, person);
 
     return person;
   }
@@ -137,7 +137,7 @@ public class DemoController {
     return list.get((int) index);
   }
 
-  private final List<DemoFamilyName> fNames
+  private final List<DemoFamilyName> familyNames
       = Arrays.asList(new DemoFamilyName[]{
         new DemoFamilyName("街野", "マチノ"),
         new DemoFamilyName("街坂", "マチサカ"),
@@ -146,7 +146,7 @@ public class DemoController {
         new DemoFamilyName("メッシ", "メッシ")
       });
 
-  private final List<DemoGivenName> gNames
+  private final List<DemoGivenName> givenNames
       = Arrays.asList(new DemoGivenName[]{
         new DemoGivenName("栄男", "サカオ"),
         new DemoGivenName("蹴男", "ケリオ"),
