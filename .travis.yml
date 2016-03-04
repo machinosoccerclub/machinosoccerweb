@@ -16,4 +16,4 @@ env:
   global:
     - JDBC_URL=jdbc:postgresql:travis_db
     - DB_USER=postgres
-    - DB_PASSWORD=
+    - DB_PASSWORD=''
