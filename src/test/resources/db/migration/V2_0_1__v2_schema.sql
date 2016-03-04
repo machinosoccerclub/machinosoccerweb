@@ -37,6 +37,8 @@ create table member (
   grade int not null,
   gender int not null,
 
+  activity_notice varchar,
+
   joined_at date not null,
 
   course int not null,

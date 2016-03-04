@@ -8,6 +8,7 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Transient;
 
 import lombok.Data;
 
@@ -32,10 +33,17 @@ public class Member {
   @PrimaryKeyJoinColumn
   private MemberPhoto photo;
 
+  private String activityNotice;
+
   private LocalDate joinedAt;
 
   @Enumerated
   private Course course;
 
   private Long familyId;
+
+  @Transient
+  public boolean hasActivityNotice() {
+    return activityNotice != null && activityNotice.length() > 0;
+  }
 }

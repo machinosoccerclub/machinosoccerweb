@@ -11,9 +11,12 @@ import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.boot.test.SpringApplicationConfiguration
+import org.springframework.test.annotation.Rollback
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner
 
+import javax.persistence.EntityManager
+import javax.transaction.Transactional
 import java.time.LocalDate
 import java.util.stream.Collectors
 
@@ -21,6 +24,8 @@ import java.util.stream.Collectors
 @SpringApplicationConfiguration(Application)
 @EnableConfigurationProperties
 @ActiveProfiles(profiles = ["development", "unitTest"], inheritProfiles = true)
+@Transactional
+@Rollback
 class MemberRepositoryTest {
   @Autowired
   private JpaMemberRepository memberRepository
@@ -30,6 +35,9 @@ class MemberRepositoryTest {
 
   @Autowired
   private JpaMemberPhotoRepository memberPhotoRepository
+
+  @Autowired
+  private EntityManager entityManager;
 
   private Long familyId
 
@@ -63,6 +71,8 @@ class MemberRepositoryTest {
     def memberPhoto = new MemberPhoto('1234560',
         new GooglePicasaPhotoEntry('aaa', 'nnn', 'b', 'm'))
     memberPhotoRepository.saveAndFlush(memberPhoto)
+
+    clearCache(memberRepository.findOne('1234560'))
 
     def member = memberRepository.findOne('1234560')
 
@@ -109,5 +119,21 @@ class MemberRepositoryTest {
     // collect to set so that we have a set of unique numbers
 
     assert serialNumbers.size() == 50
+  }
+
+  @Test
+  void updateActivityNotice() {
+    def memberNo = "1234560"
+    def notice = "updated notice"
+    assert 0 != memberRepository.updateActivityNotice(memberNo, notice)
+
+    clearCache(memberRepository.findOne(memberNo))
+
+    assert memberRepository.findOne(memberNo).activityNotice == notice
+  }
+
+  private void clearCache(Object entity) {
+    entityManager.refresh(entity)
+    entityManager.getEntityManagerFactory().cache.evictAll()
   }
 }

@@ -3,6 +3,7 @@ package machinosoccerweb.members.repositories;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import machinosoccerweb.infra.TempCollectionRepository;
@@ -27,6 +28,15 @@ public class MemberRepository extends TempCollectionRepository<Member, String> {
 
   public Long getNextSerialNumber() {
     return incrementAndGetId();
+  }
+
+  public int updateActivityNotice(String memberNo, String notice) {
+    return Optional.ofNullable(findOne(memberNo))
+        .map(m -> {
+          m.setActivityNotice(notice);
+          return 1;
+        })
+        .orElse(0);
   }
 
   @Override

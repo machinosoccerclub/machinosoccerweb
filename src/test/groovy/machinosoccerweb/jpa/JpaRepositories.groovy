@@ -2,6 +2,7 @@ package machinosoccerweb.jpa
 
 import machinosoccerweb.login.models.LoginLinkRequest
 import machinosoccerweb.members.models.Account
+
 import machinosoccerweb.members.models.Member
 import machinosoccerweb.members.models.MemberPhoto
 import machinosoccerweb.members.models.Parent
@@ -19,6 +20,11 @@ public interface JpaMemberRepository extends JpaRepository<Member, String> {
 
   @Query(value = "select nextval('sq_member_serial')", nativeQuery = true)
   Long getNextSerialNumber();
+
+  @Modifying
+  @Query("update Member m set m.activityNotice = :activityNotice where m.memberNo = :memberNo")
+  int updateActivityNotice(@Param("memberNo") String memberNo,
+                           @Param("activityNotice") String activityNotice);
 }
 
 @Repository

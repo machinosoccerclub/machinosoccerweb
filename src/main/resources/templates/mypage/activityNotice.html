@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="layoutJs">
+<head>
+  <meta th:remove="all" charset="UTF-8">
+  <title>参加者の活動にあたっての留意事項など</title>
+</head>
+<body>
+<div layout:fragment="content">
+  <div class="main">
+    <h2>
+      <ruby th:inline="text">
+        [[${member.familyName}]]
+        <rp>(</rp>
+        <rt th:text="${member.familyNameKana}"></rt>
+        <rp>)</rp>
+      </ruby>
+      <ruby th:inline="text">
+        [[${member.givenName}]]
+        <rp>(</rp>
+        <rt th:text="${member.givenNameKana}"></rt>
+        <rp>)</rp>
+      </ruby>さんについて
+    </h2>
+
+    <form method="POST" id="activityNoticeForm" role="form"
+          th:action="@{|/mypage/member/${member.memberNo}/activityNotice|}"
+          th:novalidate="${@environment.acceptsProfiles('development')}">
+      <fieldset th:object="${member}">
+
+        <!--<div class="form-group required">-->
+          <!--<label class="col-sm-2 control-label">会員番号</label>-->
+          <!--<div class="col-sm-10">-->
+            <!--<input type="text" class="form-control" name="memberNo"-->
+                   <!--th:field="*{memberNo}" readonly>-->
+          <!--</div>-->
+        <!--</div>-->
+
+        <!-- ===================================================================================== -->
+        <!--   Names                                                                               -->
+        <!-- ===================================================================================== -->
+        <!--<div class="form-group required">-->
+          <!--<label class="col-sm-2 control-label">氏名</label>-->
+          <!--<div class="col-sm-10">-->
+            <!--<ruby th:inline="text">-->
+              <!--[[${member.familyName}]]-->
+              <!--<rp>(</rp>-->
+              <!--<rt th:text="${member.familyNameKana}"></rt>-->
+              <!--<rp>)</rp>-->
+            <!--</ruby>-->
+            <!--<ruby th:inline="text">-->
+              <!--[[${member.givenName}]]-->
+              <!--<rp>(</rp>-->
+              <!--<rt th:text="${member.givenNameKana}"></rt>-->
+              <!--<rp>)</rp>-->
+            <!--</ruby>-->
+          <!--</div>-->
+        <!--</div>-->
+
+        <div class="form-group" th:object="${activityNoticeForm}">
+          <label class="col-sm-2 control-label" for="activityNotice">活動にあたっての留意事項</label>
+          <div class="col-sm-10">
+            <span class="help-block">活動に参加するにあたり、医療機関による指導などでスタッフが知っておくべき
+            ことがありましたらご記入ください。</span>
+            <span class="help-block">
+            例：活動の制限、発作が起きた時の症状・特徴、スタッフに対処してほしい処置（投薬、緊急連絡先への電話の要否など
+            </span>
+            <label class="radio-inline" th:inline="text" for="no">
+              <input id="no" type="radio" name="hasNotice" th:field="*{hasNotice}" value="no"
+                     required/>
+              特にありません
+            </label>
+            <label class="radio-inline" th:inline="text" for="yes">
+              <input id="yes" type="radio" name="hasNotice" th:field="*{hasNotice}" value="yes"
+                     required/>
+              以下のとおりです
+            </label>
+            <textarea rows="8" class="form-control" id="activityNotice" name="activityNotice"
+                      th:field="*{activityNotice}"></textarea>
+            <span th:if="${#fields.hasErrors('activityNotice')}" class="text-danger"
+                  th:errors="*{activityNotice}">Error</span>
+          </div>
+        </div>
+
+
+        <div class="form-group">
+          <div class="col-sm-3">
+            <input type="submit" id="submitUpdates" class="btn btn-success"
+                   value="更新する"/>
+          </div>
+          <div class="col-sm-3">
+            <a type="button" class="btn btn-default"
+               th:href="@{|/mypage|}">保存せず戻る </a>
+          </div>
+
+          <span id="helpBlock" class="help-block">プライバシーポリシーの詳細についてはこちらの<a
+              href="http://goo.gl/6Gbiyr" target="_blank">リンク</a>をご確認ください
+          </span>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script layout:fragment="additionalScripts">
+    $('#activityNotice').focus(function() {
+      $('#yes').prop('checked', true);
+    });
+
+    $('#no').click(function() {
+      if($('#activityNotice').val()) {
+        if(confirm('ご記入された内容は削除されますが、よろしいですか？')) {
+          $('#activityNotice').val('');
+        } else {
+          return false;
+        }
+      }
+
+      return true;
+    });
+  </script>
+</div>
+</body>
+</html>
