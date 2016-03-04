@@ -1,6 +1,6 @@
 package machinosoccerweb.login.repositories
+
 import machinosoccerweb.Application
-import machinosoccerweb.jpa.JpaLoginLinkRequestRepository
 import machinosoccerweb.login.models.LoginLinkRequest
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.context.properties.EnableConfigurationProperties
@@ -23,7 +23,7 @@ import java.time.LocalDate
 @Rollback
 class LoginLinkRequestRepositoryTest extends Specification {
   @Autowired
-  private JpaLoginLinkRequestRepository linkRequestRepository
+  private LoginLinkRequestRepository linkRequestRepository
 
   @Unroll
   def "persist an entity with attribute typed java.time.LocalDate"() {

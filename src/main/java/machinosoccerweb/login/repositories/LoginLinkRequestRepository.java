@@ -1,13 +1,21 @@
 package machinosoccerweb.login.repositories;
 
-import machinosoccerweb.infra.TempCollectionRepository;
+import java.time.LocalDate;
+
 import machinosoccerweb.login.models.LoginLinkRequest;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class LoginLinkRequestRepository extends TempCollectionRepository<LoginLinkRequest, String> {
-  @Override
-  protected String convert(long newId) {
-    return String.valueOf(newId);
-  }
+public interface LoginLinkRequestRepository extends JpaRepository<LoginLinkRequest, String> {
+  @Modifying
+  @Query("delete LoginLinkRequest r where r.issuedDate < :date")
+  int deleteLoginLinkRequestsBefore(@Param("date")LocalDate date);
+
+  @Modifying
+  @Query("delete LoginLinkRequest r where r.emailAddress = :emailAddress")
+  int deleteByEmailAddress(@Param("emailAddress")String emailAddress);
 }

@@ -1,9 +1,6 @@
 package machinosoccerweb.members.repositories
 
 import machinosoccerweb.Application
-import machinosoccerweb.jpa.JpaMemberPhotoRepository
-import machinosoccerweb.jpa.JpaMemberRepository
-import machinosoccerweb.jpa.JpaParentRepository
 import machinosoccerweb.members.models.*
 import org.junit.Before
 import org.junit.Test
@@ -28,13 +25,13 @@ import java.util.stream.Collectors
 @Rollback
 class MemberRepositoryTest {
   @Autowired
-  private JpaMemberRepository memberRepository
+  private MemberRepository memberRepository
 
   @Autowired
-  private JpaParentRepository parentRepository
+  private ParentRepository parentRepository
 
   @Autowired
-  private JpaMemberPhotoRepository memberPhotoRepository
+  private MemberPhotoRepository memberPhotoRepository
 
   @Autowired
   private EntityManager entityManager;
@@ -119,17 +116,6 @@ class MemberRepositoryTest {
     // collect to set so that we have a set of unique numbers
 
     assert serialNumbers.size() == 50
-  }
-
-  @Test
-  void updateActivityNotice() {
-    def memberNo = "1234560"
-    def notice = "updated notice"
-    assert 0 != memberRepository.updateActivityNotice(memberNo, notice)
-
-    clearCache(memberRepository.findOne(memberNo))
-
-    assert memberRepository.findOne(memberNo).activityNotice == notice
   }
 
   private void clearCache(Object entity) {

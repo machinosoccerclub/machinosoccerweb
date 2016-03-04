@@ -1,10 +1,6 @@
 package machinosoccerweb.members.repositories
 
 import machinosoccerweb.Application
-import machinosoccerweb.jpa.JpaAccountRepository
-import machinosoccerweb.jpa.JpaMemberPhotoRepository
-import machinosoccerweb.jpa.JpaMemberRepository
-import machinosoccerweb.jpa.JpaParentRepository
 import machinosoccerweb.members.models.Account
 import machinosoccerweb.members.models.Course
 import machinosoccerweb.members.models.Gender
@@ -28,13 +24,13 @@ import java.time.LocalDate
 @WebAppConfiguration
 class ForeignKeyCascadingSpec extends Specification{
   @Autowired
-  private JpaAccountRepository accountRepository
+  private AccountRepository accountRepository
   @Autowired
-  private JpaParentRepository parentRepository
+  private ParentRepository parentRepository
   @Autowired
-  private JpaMemberRepository memberRepository
+  private MemberRepository memberRepository
   @Autowired
-  private JpaMemberPhotoRepository memberPhotoRepository
+  private MemberPhotoRepository memberPhotoRepository
 
   def "an account and members should be deleted when the associated parent is deleted" () {
     setup:
