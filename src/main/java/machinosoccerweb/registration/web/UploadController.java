@@ -59,7 +59,7 @@ public class UploadController {
       try (InputStream is = file.getInputStream()) {
         picasaweb.uploadPhoto(
             file.getOriginalFilename(),
-            nameAndKana,
+            grade + "・" + nameAndKana,
             determineContentType(file),
             new String[]{grade, gender, genderTags.get(grade)},
             is);
