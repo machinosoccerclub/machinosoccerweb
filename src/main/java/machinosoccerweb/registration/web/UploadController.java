@@ -3,6 +3,10 @@ package machinosoccerweb.registration.web;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Base64;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 import machinosoccerweb.google.Picasaweb;
 import org.slf4j.Logger;
@@ -57,7 +61,7 @@ public class UploadController {
             file.getOriginalFilename(),
             nameAndKana,
             determineContentType(file),
-            new String[]{grade, gender},
+            new String[]{grade, gender, genderTags.get(grade)},
             is);
       } catch(RetrofitError error) {  // todo: move to exception handler
         logger.error("could not upload the photo." +
@@ -104,4 +108,19 @@ public class UploadController {
     int i = filename.indexOf(".");
     return i >= 0 ? filename.substring(i+1) : "";
   }
+
+  private static final Map<String, String> genderTags = new LinkedHashMap<String, String>() {
+    {
+      put("年少", "MachisakaPreSchoolerG1");
+      put("年中", "MachisakaPreSchoolerG2");
+      put("年長", "MachisakaPreSchoolerG3");
+      put("小１", "MachisakaFC-U7");
+      put("小２", "MachisakaFC-U8");
+      put("小３", "MachisakaFC-U9");
+      put("小４", "MachisakaFC-U10");
+      put("小５", "MachisakaFC-U11");
+      put("小６", "MachisakaFC-U12");
+    }
+  };
+
 }
