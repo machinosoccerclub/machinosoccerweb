@@ -3,10 +3,8 @@
  */
 buildscript {
   dependencies {
-    classpath 'org.springframework.boot:spring-boot-gradle-plugin:1.2.5.RELEASE'
-    classpath 'com.wiredforcode:gradle-heroku-plugin:1.0.0'
-    classpath 'org.springframework:springloaded:1.2.2.RELEASE'
-    classpath 'io.spring.gradle:dependency-management-plugin:0.5.2.RELEASE'
+    classpath 'org.springframework.boot:spring-boot-gradle-plugin:1.3.2.RELEASE'
+    classpath 'io.spring.gradle:dependency-management-plugin:0.5.4.RELEASE'
   }
   repositories {
     jcenter()
@@ -22,25 +20,30 @@ apply plugin: 'spring-boot'
 apply plugin: 'io.spring.dependency-management'
 apply plugin: 'checkstyle'
 apply plugin: 'idea'
-apply plugin: 'heroku'
+apply plugin: 'eclipse'
 
 repositories {
   jcenter()
 }
 
+configurations {
+  provided
+}
+
+sourceSets {
+  main { compileClasspath += configurations.provided }
+}
+
 task wrapper(type: Wrapper) {
-  gradleVersion = '2.7'
+  gradleVersion = '2.10'
 }
 
 defaultTasks 'build'
 
-// override the tomcat version
-ext['tomcat.version'] = '8.0.23'
-
 // use spring io platform
 dependencyManagement {
   imports {
-    mavenBom 'io.spring.platform:platform-bom:1.1.3.RELEASE'
+    mavenBom 'io.spring.platform:platform-bom:2.0.3.RELEASE'
   }
 }
 
@@ -49,7 +52,6 @@ dependencies {
   compile 'org.springframework.boot:spring-boot-starter-web'
   compile 'org.springframework.boot:spring-boot-starter-thymeleaf'
   compile 'org.springframework.boot:spring-boot-starter-data-jpa'
-  compile 'org.springframework.boot:spring-boot-starter-logging'
 
   compile 'com.squareup.retrofit:retrofit:1.9.0'
   compile 'com.squareup.retrofit:converter-simplexml:1.9.0'
@@ -65,19 +67,27 @@ dependencies {
   compile 'org.webjars:bootstrap:3.3.4'
   compile 'org.webjars.bower:fuelux:3.10.0'
 
+  provided 'org.projectlombok:lombok:1.16.6'
+
   checkstyle 'com.puppycrawl.tools:checkstyle:6.10.1'
   // when modify the version of library, consider to update
   // `config/checkstyle/checkstyle.xml` with the latest. see below.
   // https://github.com/checkstyle/checkstyle/blob/master/src/main/resources/google_checks.xml
 
+  runtime 'org.springframework.boot:spring-boot-devtools'
+  runtime 'org.springframework.boot:spring-boot-starter-logging'
   runtime 'net.sourceforge.nekohtml:nekohtml:1.9.21'
   runtime 'org.flywaydb:flyway-core:3.2.1'
-  runtime 'com.h2database:h2:1.4.188'
+  runtime 'com.h2database:h2:1.4.191'
   runtime 'org.postgresql:postgresql:9.4-1202-jdbc42'
 
   testCompile 'junit:junit:4.12'
   testCompile 'org.springframework.boot:spring-boot-starter-test'
   testCompile 'org.mockito:mockito-all:1.10.19'
+}
+
+compileJava {
+  options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
 }
 
 task checkstyleHtml {
@@ -99,32 +109,49 @@ task checkstyleHtml {
 checkstyleMain.finalizedBy checkstyleHtml
 
 bootRun {
+  addResources = true
+
   // specify active profile by
   // `gradle bootRun -PactiveProfile="your-profile-name"`
   //   or "development" as default
-  def profileName = project.hasProperty('activeProfile') ? project.activeProfile : 'development'
+
+  // specify NOT use gc opts by
+  // `gradle bootRun -PnoGCOpts`
+
+  // run debug mode
+  // `gradle bootRun -PdebugPort` # to use port number 5005 as default
+  // or `gradle bootRun -PdebugPort=5006`
+
+  def profileName = project.hasProperty('activeProfile') ?
+                    project.activeProfile :
+                    'development,h2Debug,demo'
   def appOpts = ["-Dspring.profiles.active=$profileName"]
   def stdOpts = ['-Dfile.encoding=UTF8', '-Xmx384m', '-Xss512k']
-  def gcOpts = ['-XX:+PrintGCDetails', '-XX:+PrintHeapAtGC',
-                '-XX:+PrintGCDateStamps', '-XX:+PrintTenuringDistribution',
-                '-XX:+UseConcMarkSweepGC']
+  def gcOpts =  project.hasProperty('noGCOpts') ? [] :
+                ['-XX:+PrintGCDetails', '-XX:+PrintHeapAtGC',
+                 '-XX:+PrintGCDateStamps', '-XX:+PrintTenuringDistribution',
+                 '-XX:+UseConcMarkSweepGC']
+  def debugOpts = project.hasProperty('debugPort') ? ["-Xdebug",
+      "-Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=${project.debugPort ?: 5005}"] : []
 
-  jvmArgs = appOpts + stdOpts + gcOpts
+  jvmArgs = appOpts + stdOpts + gcOpts + debugOpts
+}
+
+bootRepackage {
+  // ensure exclude the Devtools library on the production environment
+  excludeDevtools = true
 }
 
 idea {
   module {
     inheritOutputDirs = false
     outputDir = file('$buildDir/classes/main/')
+
+    scopes.PROVIDED.plus += [configurations.provided]
   }
 }
 
-if (file('herokuSettings.gradle').exists()) apply from: 'herokuSettings.gradle'
-
 // `stage` is to deploy the application on the heroku dyno.
 task stage {
-  dependsOn 'clean'    // clean rebuild
   dependsOn 'assemble'
-
-  mustRunAfter 'clean'
 }
