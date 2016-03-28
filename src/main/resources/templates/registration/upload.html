@@ -29,60 +29,51 @@
     <div class="main">
       <h2>顔写真アップロード</h2>
 
-      <form method="POST" id="uploadForm" enctype="multipart/form-data" th:action="@{|/upload|}"
-            th:novalidate="${@environment.acceptsProfiles('development')}">
-        <fieldset th:object="${memberForm}">
+      <form method="POST" id="uploadForm" enctype="multipart/form-data" action="/upload">
+        <fieldset>
         <legend>入会者情報</legend>
         <div class="form-group required">
           <label class="control-label" for="name">名前（漢字）</label>
           <input type="text" name="name" id="name" class="form-control"
                  data-validation-error-msg="入力してください"
-                 th:field="*{name}"
                  required />
-          <span th:if="${#fields.hasErrors('name')}"
-                th:errors="*{name}" class="text-danger">入力してください</span>
         </div>
         <div class="form-group required">
           <label class="control-label" for="nameKana">名前（ふりがな）</label>
           <input type="text" name="nameKana" id="nameKana" class="form-control"
                  data-validation-error-msg="入力してください"
-                 th:field="*{nameKana}"
                  required />
-          <span th:if="${#fields.hasErrors('nameKana')}"
-                th:errors="*{nameKana}" class="text-danger">入力してください</span>
         </div>
         <div class="form-group required">
           <label class="control-label">学年</label>
           <div class="radio">
-            <label
-                th:each="grade: ${T(machinosoccerweb.members.models.Grade).values()}"
-                class="radio-inline" th:inline="text"> <input
-                type="radio" name="grade" th:field="*{grade}"
-                th:value="${grade}" required>[[${grade.label}]]
-            </label>
-            <span id="helpPr" class="help-block">
-              *お手伝い頂いている保護者の方、お手伝いコーチの方もよろしければご登録ください</span>
-            <span th:if="${#fields.hasErrors('grade')}" class="text-danger"
-                  th:errors="*{grade}">Error</span>
+            <label class="radio-inline"><input type="radio" name="grade" id="gradek1" value="年少"
+                                               data-validation-error-msg="入力してください"
+                                               required />年少</label>
+            <label class="radio-inline"><input type="radio" name="grade" id="gradek2" value="年中" />年中</label>
+            <label class="radio-inline"><input type="radio" name="grade" id="gradek3" value="年長" />年長</label>
+            <label class="radio-inline"><input type="radio" name="grade" id="gradee1" value="小１" />小１</label>
+            <label class="radio-inline"><input type="radio" name="grade" id="gradee2" value="小２" />小２</label>
+            <label class="radio-inline"><input type="radio" name="grade" id="gradee3" value="小３" />小３</label>
+            <label class="radio-inline"><input type="radio" name="grade" id="gradee4" value="小４" />小４</label>
+            <label class="radio-inline"><input type="radio" name="grade" id="gradee5" value="小５" />小５</label>
+            <label class="radio-inline"><input type="radio" name="grade" id="gradee6" value="小６" />小６</label>
+            <label class="radio-inline"><input type="radio" name="grade" id="gradepr" value="保護者" />保護者<sup>*</sup></label>
+            <span id="helpPr" class="help-block">*お手伝い頂いている保護者の方、お手伝いコーチの方もよろしければご登録ください</span>
           </div>
         </div>
         <div class="form-group required">
           <label class="control-label">性別</label>
           <div class="radio">
-            <label
-                th:each="gender: ${T(machinosoccerweb.members.models.Gender).values()}"
-                class="radio-inline" th:inline="text"> <input
-                type="radio" name="gender" th:field="*{gender}"
-                th:value="${gender}" required/>[[${gender.label}]]
-            </label>
-            <span th:if="${#fields.hasErrors('gender')}" class="text-danger"
-                           th:errors="*{gender}">Error</span>
+            <label class="radio-inline"><input type="radio" name="gender" id="genderm" value="男"
+                                               data-validation-error-msg="入力してください"
+                                               required />男性</label>
+            <label class="radio-inline"><input type="radio" name="gender" id="genderf" value="女" />女性</label>
           </div>
         </div>
         <div class="form-group required">
           <label class="control-label" for="photo">顔写真</label>
-          <input type="file" id="file" name="file"
-                 accept="image/gif, image/png, image/jpg, image/jpeg"
+          <input type="file" id="photo" name="photo" accept="image/gif, image/png, image/jpg, image/jpeg"
                  data-validation="mime size required"
                  data-validation-allowing="jpg, jpeg, png, gif"
                  data-validation-max-size="2kb"
@@ -90,20 +81,6 @@
                  data-validation-error-msg-mime="画像ファイルを選択してください"
                  data-validation-error-msg-required="写真を選択してください"
                  required />
-          <span th:if="${#fields.hasErrors('file')}"
-                th:errors="*{file}" class="text-danger">
-            写真のファイル形式は<code>gif, png, jpg(jpeg)</code>です。
-            写真のサイズが大きすぎると時間がかかったりエラーになることがありますので、
-            その場合は時間をおいてやり直すか、トリミングするなどしてサイズを小さくしてやり直してください。
-          </span>
-
-          <p class="help-block" id="photo-help">
-            <ul>
-              <li>学年や性別で区別がつくようであれば、ご家族や他の方と一緒の写真でも構いません</li>
-              <li>顔が分かる写真であればアップでなくても構いません</li>
-              <li>後から写真を変更することもできます</li>
-            </ul>
-          </p>
         </div>
         <div class="form-group">
           <input type="submit" id="uploadSubmit" class="btn btn-success btn-block" value="送信" />
