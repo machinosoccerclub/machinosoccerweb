@@ -2,28 +2,21 @@ package machinosoccerweb.registration.web;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Base64;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import machinosoccerweb.infra.google.GooglePicasa;
-import machinosoccerweb.members.models.Gender;
-import machinosoccerweb.members.models.Grade;
-import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import retrofit.RetrofitError;
 
 @Slf4j
 @Controller

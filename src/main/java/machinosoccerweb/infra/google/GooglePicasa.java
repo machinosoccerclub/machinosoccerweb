@@ -15,7 +15,6 @@ import com.google.gdata.data.photos.PhotoEntry;
 import com.google.gdata.util.ServiceException;
 import com.google.gdata.util.Version;
 import lombok.extern.slf4j.Slf4j;
-import machinosoccerweb.members.models.GooglePicasaPhotoEntry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -47,15 +46,6 @@ public class GooglePicasa {
     }
   }
 
-  public GooglePicasaPhotoEntry updatePhoto(GooglePicasaPhotoEntry entry, String title,
-                                            InputStream is, String contentType) {
-    try {
-      return updatePhotoInternal(entry, title, is, contentType);
-    } catch (Exception exception) {
-      throw new RuntimeException(exception);
-    }
-  }
-
   public static Optional<String> normalizeMediaType(String contentType) {
     if (contentType == null) {
       return Optional.empty();
@@ -76,29 +66,6 @@ public class GooglePicasa {
     }
   }
 
-  private GooglePicasaPhotoEntry updatePhotoInternal(GooglePicasaPhotoEntry entry,
-                                                     String title,
-                                                     InputStream is, String contentType)
-      throws IOException, ServiceException {
-
-    // note: when we update and replace only photo, do below lines
-    //
-    //PhotoEntry updated =
-    //      createPicasaServiceForUpdate().updateMedia(new URL(entry.getPicasaPhotoEntryEditURI()),
-    //          PhotoEntry.class, new MediaStreamSource(is, contentType));
-
-    // we are updating photo and meta-data (title).
-    PhotoEntry photoEntry = new PhotoEntry();
-    photoEntry.setTitle(new PlainTextConstruct(title));
-
-    photoEntry.setMediaSource(new MediaStreamSource(is, contentType));
-
-    PhotoEntry updated =
-        createPicasaServiceForUpdate().updateMedia(new URL(entry.getPicasaPhotoEntryEditURI()),
-            photoEntry);
-
-    return createEntry(updated);
-  }
 
   private GooglePicasaPhotoEntry uploadPhotoInternal(String title, String summary, String[] tags,
                                                      InputStream is, String contentType)
