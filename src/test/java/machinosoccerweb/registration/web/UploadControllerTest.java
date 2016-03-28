@@ -2,7 +2,6 @@ package machinosoccerweb.registration.web;
 
 import java.util.Arrays;
 
-import machinosoccerweb.google.Picasaweb;
 import org.junit.Test;
 
 import static org.mockito.Mockito.*;
